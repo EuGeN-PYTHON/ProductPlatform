@@ -1,0 +1,1 @@
+web: gunicorn ProductPlatform.ProductPlatform.wsgi --log-file -

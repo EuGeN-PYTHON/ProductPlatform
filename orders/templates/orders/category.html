@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <section class="meetings-page order" id="meetings">
+        <div class="container">
+            <div class="row order-content">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="meeting-single-item">
+                                <div class="thumb">
+                                    {% if category.image %}
+                                        <img src="/media/{{ category.image }}" alt="">
+                                    {% else %}
+                                        <img src="{% static 'assets/images/placeholder_300x150.png' %}"
+                                             alt="">
+                                    {% endif %}
+                                    <div class="price">
+                                        <span>Кол-во поставщиков: {{ category.count_orders_done }}</span>
+                                    </div>
+                                </div>
+                                <div class="down-content">
+                                    <h4>{{ category.name }}</h4>
+                                    <p class="description">
+                                        {{ category.description }}
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-lg-12 top-suppliers">
+                                            <h5>Топ поставщики</h5>
+                                            <table class="suppliers mt-3" id="topsuppliers">
+                                                <tr class="table-headers">
+                                                    <th class="supplier">Поставщик</th>
+                                                    <th class="orders_amount">Количество выполненных заказов</th>
+                                                </tr>
+                                                <!-- Топ 5 поставщиков -->
+                                                {% for supplier, total in top_suppliers.items %}
+                                                    <tr class="t-row">
+                                                        <td>
+                                                            <a href="{% url 'users:profile' supplier.id %}">
+                                                                {{ supplier.comp_name }}
+                                                            </a>
+                                                        </td>
+                                                        <td>{{ total }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="share col-lg-12">
+                                                <div>
+                                                    <p><span>Всего Заказов:</span> {{ all_orders_amount }}</p>
+                                                </div>
+                                                <div>
+                                                    <p><span>Выполненные Заказы:</span> {{ all_completed_orders }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+
+                        <div class="main-button-red">
+                            {% if not user.role == 'Supplier' %}
+                                <a class="button-green"
+                                   href="{% url 'orders:create_order' %}?category_id={{ category.id }}">
+                                    Создать заказ
+                                </a>
+                            {% endif %}
+                            {% if not user.role == 'Supplier' and not user.role == 'Customer' %}
+                                {#                                <a class="button-red" href="{% url 'orders:categories' %}">Назад к списку категорий</a>#}
+                                <a class="{% if category.is_active == True %}close-btn{% else %}accept-btn{% endif %}"
+                                   href="#"
+                                   data-bs-toggle="modal"
+                                   data-bs-target="#staticBackdrop">
+                                    {% if category.is_active == True %}
+                                        Деактивировать
+                                    {% else %}
+                                        Активировать
+                                    {% endif %}
+                                </a>
+
+                                </div>
+                                <form method="POST" action="{% url 'orders:delete_category' category.id %}">
+                                    {% csrf_token %}
+                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Подтверждение
+                                                        действий</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Вы действительно уверены, что хотите
+                                                        {% if category.is_active == True %}
+                                                            Деактивировать{% else %}Активировать{% endif %}?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit"
+                                                            class="modal-btn {% if category.is_active == True %}close-btn{% else %}accept-btn{% endif %}">
+                                                        Подтверждаю
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            {% endif %}
+                        <div class="main-button-red">
+                            <a class="button-red" href="{% url 'orders:categories' %}">Назад к списку категорий</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'includes/inc_footer.html' %}
+
+    </section>
+{% endblock %}
+
+{% block morejs %}
+    <script src="{% static 'assets/js/table.js' %}"></script>
+{% endblock %}

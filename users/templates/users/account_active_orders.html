@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="section main-banner" id="top" data-section="section1">
+        <video autoplay muted loop>
+            <source src="#"/>
+        </video>
+        <div class="video-overlay header-text">
+            <div class="container" style="padding-top:105px">
+                <div class="pull-right">
+                    <a href="{% url  'users:account_edit' %}" class="btn btn-danger active"
+                       style="margin: 5px 5px 5px 5px; border-radius:20px"
+                       role="button"
+                       aria-pressed="true">
+                        Личный кабинет
+                    </a>
+                    <a href="{% url  'users:account_history_orders' %}" class="btn btn-danger active"
+                       style="margin: 5px 5px 5px 5px; border-radius:20px"
+                       role="button"
+                       aria-pressed="true">
+                        {% if user.role == 'Supplier' %}
+                            История откликов
+                        {% else %}
+                            История заказов
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="lk">
+        <div class="container" style="padding-bottom: 100px">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="card shadow-lg border-0 rounded-lg mt-5"
+                         style="background-color: rgba(250, 250, 250, 0.15);color:white">
+                        <div class="card-header">
+                            <h2 class="text-center font-weight-light my-4 ">
+                                {% if user.role == 'Supplier' %}
+                                    Отклики на активные заказы
+                                {% else %}
+                                    Активные заказы
+                                {% endif %}</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12 mx-auto">
+                                <div class="col-12">
+                                    {% if not page_obj %}
+                                        <div class="card-header" style="padding: 150px">
+                                            <h4 class="text-center font-weight-light my-4 text-primary">
+                                                {% if user.role == 'Supplier' %}
+                                                    У Вас нет активных откликов
+                                                    :-(
+                                                {% else %}
+                                                    У Вас нет активных заказов
+                                                    :-(
+                                                {% endif %}</h4>
+                                        </div>
+                                    {% endif %}
+                                    {% if user.role == 'Customer' %}
+                                        {% for order in page_obj %}
+                                            <div class="card-wrapper "
+                                                 style="{% if user.id == order.response_approved.response_user.id %}background:#931c1c;{% else %}background:rgba(250, 250, 250, 0.15);{% endif %}margin-bottom:2rem; padding:2rem; border-radius:20px">
+                                                <div class="top-line row">
+                                                    <div class="col">
+                                                        <a class="card-title"
+                                                           href="{% url 'orders:view_order' order.id %}"><strong>Заказ
+                                                            №{{ order.id }} | {{ order.name }}</strong></a>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <p class="price mbr-fonts-style display-7 text-white">
+                                                            Статус: <strong>{% if order.status == 'Active' %}Поиск
+                                                            поставщика{% else %}Заказ закрыт{% endif %}</strong>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="bottom-line">
+                                                    <p class="mbr-text mbr-fonts-style display-7 text-white">
+                                                        <strong>Категория</strong>:
+                                                        {{ order.category__name }}<br><strong>Адрес</strong>:
+                                                        г. {{ order.author__city }}<br><strong>Описание</strong>:
+                                                        {{ order.description }}<br><strong>Срок</strong>: до
+                                                        {{ order.end_time }}<br><strong>
+                                                        Цена</strong>:&nbsp;{% if order.response_approved %}
+                                                        {{ order.response_approved.offer }} {% else %}
+                                                        договорная {% endif %}
+                                                    </p>
+                                                </div>
+                                                <div class="top-line row">
+                                                    <div class="col">
+
+                                                        {% if order.count_response > 0 %}
+                                                            <strong>Предложения:</strong><br>
+                                                            {% for response in responses_to_orders %}
+                                                                {% if response.order_id == order.id %}
+                                                                    <a href="{% url 'users:profile' response.response_user.id %}"
+                                                                       class="card-title mbr-fonts-style display-7">
+                                                                        {{ response.response_user.comp_name }}
+                                                                        - {{ response.price|floatformat:2 }} ₽
+                                                                    </a>
+                                                                    <br>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <p class="price mbr-fonts-style display-7 text-white">
+                                                            Откликов: <strong> {{ order.count_response }}</strong>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% elif user.role == 'Supplier' %}
+                                        {% for response in page_obj %}
+                                            <div class="card-wrapper "
+                                                 style="{% if user.id == order.response_approved.response_user.id %}background:#931c1c;{% else %}background:rgba(250, 250, 250, 0.15);{% endif %}margin-bottom:2rem; padding:2rem; border-radius:20px">
+                                                <div class="top-line row">
+                                                    <div class="col">
+                                                        <a class="card-title"
+                                                           href="{% url 'orders:view_order' response.response.order.id %}">
+                                                            <strong>
+                                                                Отклик №{{ response.response.id }}
+                                                            </strong>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <p class="price mbr-fonts-style display-7 text-white">
+                                                            Статус: <strong>{{ response.status }}</strong></p>
+                                                    </div>
+                                                </div>
+                                                <div class="bottom-line">
+                                                    <p class="mbr-text mbr-fonts-style display-7 text-white">
+                                                        <strong>Категория</strong>:
+                                                        {{ response.response.order.category }}<br><strong>Цена</strong>:
+                                                        {{ response.response.price|floatformat:2 }} ₽<br><strong>Оффер</strong>:
+                                                        {{ response.response.offer }}<br>
+                                                    </p>
+                                                </div>
+                                                <div class="top-line row">
+                                                    <div class="col">
+{#                                                        <strong>Заказ:</strong><br>#}
+{#                                                        <a href="#"#}
+{#                                                           class="card-title mbr-fonts-style display-7">#}
+{#                                                            {{ response.order__name }}</a><br>#}
+{#                                                        </a>#}
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <p class="price mbr-fonts-style display-7 text-white">
+                                                            <a href="{% url 'orders:view_order' response.response.order_id %}"
+                                                               class="card-title mbr-fonts-style display-7">
+                                                                <strong>Заказ
+                                                                    № {{ response.response.order_id }}:</strong> {{ response.response.order.name }}
+                                                            </a><br>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% include 'includes/pagination.html' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'includes/inc_footer.html' %}
+
+    </section>
+{% endblock %}

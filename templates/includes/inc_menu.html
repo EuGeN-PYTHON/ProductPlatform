@@ -1,0 +1,40 @@
+<!-- ***** Header Area Start ***** -->
+{% load static %}
+<header class="header-area header-sticky background-header margin-sub-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="{% url 'main' %}" class="logo">
+                        <img src="{% static 'assets/images/logo.png' %}"
+                                                             alt="">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="/">Главная</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'orders:categories' %}">Категории</a></li>
+                            {% if not user.role == 'Customer' %}
+                                <li><a href="{% url 'orders:table_order' %}">Доска заказов</a></li>
+                            {% endif %}
+                            <li><a href="{% url 'users:account_edit' %}">Личный кабинет</a></li>
+                            <li><a href="{% url 'users:logout' %}">Выйти</a></li>
+                        {% endif %}
+                        {% if not user.is_authenticated %}
+                            <li><a href="{% url 'users:login' %}">Войти</a></li>
+                        {% endif %}
+                        {% if user.is_staff or user.is_admin %}
+                            <li><a href="/admin/">Администрация</a></li>
+                        {% endif %}
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>

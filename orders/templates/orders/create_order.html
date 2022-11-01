@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="heading-page-create_order header-text" id="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Создание заказа</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="meetings-page create-order" id="meetings">
+        <form id='form' action="{% url 'orders:create_order' %}" method="post">
+            {% csrf_token %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            {% if form.errors %}
+                                <div
+                                        class="alert alert-warning alert-dismissible fade show"
+                                        role="alert"
+                                        style="margin-top: 50px">
+                                    {{ form.non_field_errors }} {% for error in form %} {{ error.errors }}
+                                {% endfor %}
+                                    <button
+                                            type="button"
+                                            class="close"
+                                            data-dismiss="alert"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endif %}
+                            <div class="col-lg-12">
+                                <div class="meeting-single-item mb-3">
+{#                                    <div class="thumb">#}
+{#                                        <img src="{% static 'assets/images/single-meeting.jpg' %}" alt="">#}
+{#                                    </div>#}
+                                    <div class="down-content-create_order">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1"
+                                                          id="">Наименование:</label>
+                                                    {{ form.name }}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1"
+                                                          id="">Категория:</label>
+                                                    {{ form.category }}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1"
+                                                    id="">Действует до:</label>
+                                                    {{ form.end_time }}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="mb-3">
+                                                    <fieldset>
+                                                        <label class="small mb-1"
+                                                        id="">Описание:</label>
+                                                        {{ form.description }}
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="main-button-red">
+                                        <button id='button_clear' class="button-red btn-block" type="button">
+                                            Очистить форму
+                                        </button>
+                                        <button class="button-green" role="button" aria-pressed="true">
+                                            Создать заказ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        {% include 'includes/inc_footer.html' %}
+
+    </section>
+{% endblock %}

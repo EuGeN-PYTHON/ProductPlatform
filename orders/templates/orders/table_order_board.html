@@ -1,0 +1,116 @@
+{% load filter_tags %}
+
+<table id="datatable" class="meeting-table table count-digit-table">
+    <thead>
+    <tr class="count-digit-table">
+{#        <th class="num">№</th>#}
+        <th class="order-id">id Заказа</th>
+        <th class="name">Наименование</th>
+        <th class="category">Категория</th>
+        <th class="company">Фирма</th>
+        <th class="start-date">Дата заказа</th>
+        <th class="end-date">Действует до</th>
+        <th class="status">Статус</th>
+        {% if request.user.is_staff or request.user.is_admin %}
+            <th class="action"></th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in page_obj %}
+        <tr>
+{#            <td>{{ forloop.counter }}</td>#}
+            <td data-href="{% url 'orders:view_order' row.id %}"
+                class="meeting-table-row meeting-table-cell">{{ row.id }}</td>
+            <td data-href="{% url 'orders:view_order' row.id %}"
+                class="meeting-table-row meeting-table-cell">{{ row.name }}</td>
+            <td data-href="{% url 'orders:view_order' row.id %}"
+                class="meeting-table-row meeting-table-cell category_row">{{ row.category }}</td>
+            <td data-href="{% url 'orders:view_order' row.id %}"
+                class="meeting-table-row meeting-table-cell">{{ row.author.comp_name }}</td>
+            <td data-href="{% url 'orders:view_order' row.id %}"
+                class="meeting-table-row meeting-table-cell">{{ row.create_at }}</td>
+            <td data-href="{% url 'orders:view_order' row.id %}"
+                class="meeting-table-row meeting-table-cell">{{ row.end_time }}</td>
+            <td {% if row.status == 'Active' %} class="text-success" {% else %}
+                                                class="text-danger" {% endif %}> {{ row.status }}</td>
+
+            {% if request.user.is_staff or request.user.is_admin %}
+                <td class="button_delete">
+                    <button class="action-btn {% if row.status == 'Active' %}close-btn{% else %}accept-btn{% endif %}"
+                            data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ row.id }}"
+                            type="submit" name="{{ row.id }}">
+                        {% if row.status == 'Active' %}
+                            Деактивировать
+                        {% else %}
+                            Активировать
+                        {% endif %}
+                    </button>
+                    <div class="modal fade" id="staticBackdrop{{ row.id }}" data-bs-backdrop="static"
+                         data-bs-keyboard="false" tabindex="-1"
+                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Подтверждение действий</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Закрыть"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Вы действительно уверены, что хотите {% if row.status == 'Active' %}
+                                    Активировать{% else %}Деактивировать{% endif %}?
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <div class="btns">
+                                            <button class="change-status modal-btn {% if row.status == 'Active' %}accept-btn{% else %}close-btn{% endif %}"
+                                                    data-href="{% my_url page_obj.number 'page' request.GET.urlencode row.id %}">
+                                                Подтверждаю
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+<div class="pagination col-lg-12">
+    <ul>
+        {% if page_obj.has_previous %}
+            <li>
+                <a href="{% my_url 1 'page' request.GET.urlencode %}">
+                    <i class="fa fa-angle-double-left"></i>
+                </a>
+            </li>
+            <li>
+                <a href="{% my_url page_obj.previous_page_number 'page' request.GET.urlencode %}">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            </li>
+        {% endif %}
+        <li class="active">
+            <a href="#">
+                {{ page_obj.number }}
+            </a>
+        </li>
+        {% if page_obj.has_next %}
+            <li>
+                <a href="{% my_url page_obj.next_page_number 'page' request.GET.urlencode %}">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="{% my_url page_obj.paginator.num_pages 'page' request.GET.urlencode %}">
+                    <i class="fa fa-angle-double-right"></i>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
