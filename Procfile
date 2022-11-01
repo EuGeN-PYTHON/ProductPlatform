@@ -1,1 +1,1 @@
-web: gunicorn ProductPlatform.ProductPlatform.wsgi --log-file -
+web: gunicorn ProductPlatform.wsgi --log-file -
