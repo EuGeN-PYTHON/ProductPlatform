@@ -207,7 +207,7 @@
                                         <label class="small mb-1" for="company">Компания</label>
                                         <a href="{% url 'users:profile' order.author_id %}">
                                             <div class="read_only order-info">
-                                                {{ order.author.comp_name }} на сайте с {{ order.author.date_joined }}
+                                                {{ order.author.comp_name }} на сайте с {{ order.author.date_joined|date:'d.m.y' }}
                                             </div>
                                         </a>
                                     </div>

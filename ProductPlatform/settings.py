@@ -22,12 +22,11 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY',
-                       'django-insecure-16=_c(2y5u^c!1ui)(cv&a@#ywukmvb_dbplne)dmp@qjte4d4')
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = os.getenv('DJANGO_DEBUG', 'True')
+DEBUG = os.environ['DJANGO_DEBUG']
 
 ALLOWED_HOSTS = ['*']
 
@@ -91,8 +90,8 @@ DATABASES = {
         'NAME': 'dc18nq7jd8hffp',
         'HOST': 'ec2-54-228-32-29.eu-west-1.compute.amazonaws.com',
         'PORT': 5432,
-        'USER': 'dyfouvzfiyabfs',
-        'PASSWORD': 'c7a46604700a6f8467cb734616e4044a44474da122917f65cee6af22ad8fac3f',
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
     }
 }
 
@@ -160,7 +159,7 @@ EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'estet.estetikov@yandex.ru'
 DEFAULT_FROM_EMAIL = 'My Kitchen <estet.estetikov@yandex.ru>'
 RECIPIENTS_EMAIL = ['estet.estetikov@yandex.ru']
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 
 # if DEBUG:
 #     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
