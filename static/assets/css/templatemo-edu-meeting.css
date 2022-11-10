@@ -3456,3 +3456,7 @@ section.heading-page-create_order h2 {
     background-repeat: no-repeat;
     background-size: cover;
 }
+/* правки*/
+.main-nav .nav {
+    padding: 4px;
+}
