@@ -2582,8 +2582,18 @@ section.auth_login .submit-btn {
 }
 
 section.auth_login .submit-btn-login {
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
+}
+/* Вставка */
+@media (max-width: 405px) {
+	section.auth_login .submit-btn-login {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
 }
 
 section.auth_login .submit-btn-login a {
