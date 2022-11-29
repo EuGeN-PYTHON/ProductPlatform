@@ -2429,7 +2429,7 @@ section.profile .left-info ul li span {
 }
 
 /* Вставка */
-@media (max-width: 375) {
+@media (max-width: 375px) {
 	.button_clear {
         width: 230px;
         height: 40px;
