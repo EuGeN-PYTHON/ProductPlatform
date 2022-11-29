@@ -2830,6 +2830,7 @@ section.orders-table-board .filter-form {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
 		max-width: unset !important;
+		overflow: scroll;
 	}
 
 	/*section.orders-table-board .row-table {*/
