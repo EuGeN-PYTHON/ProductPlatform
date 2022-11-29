@@ -947,6 +947,14 @@ banner
 	overflow: hidden;
 	margin-bottom: -7px;
 }
+@media (max-width: 520px) {
+	.main-banner .caption {
+		margin-top: 30px;
+	}
+	.section .main-banner {
+		height: 400px;
+	}
+}
 
 #bg-video {
 	min-width: 100%;
@@ -3441,14 +3449,6 @@ responsive
 	}
 }
 
-@media (max-width: 520px) {
-	.main-banner .caption {
-		margin-top: 30px;
-	}
-	.section .main-banner {
-		height: 400px;
-	}
-}
 /*
 ---------------------------------------------
 table
