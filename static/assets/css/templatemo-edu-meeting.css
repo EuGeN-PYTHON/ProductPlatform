@@ -809,11 +809,6 @@ header
 		display: none;
 	}
 }
-@media (max-width: 992px) {
-	.header-area .menu-trigger {
-		display: block !important;
-	}
-}
 
 @media (max-width: 767px) {
 	.header-area .main-nav .logo {
