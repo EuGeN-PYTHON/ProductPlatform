@@ -3108,7 +3108,16 @@ section.meetings-page .categories-filter-form {
 	margin-bottom: 25px;
 	width: auto;
 }
-
+/* Вставка */
+@media (max-width: 560px) {
+	section.meetings-page .categories-filter-form {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+        justify-content: center;
+        align-items: center;
+	}
+}
 section.meetings-page .categories-filter-form select {
 	height: 25px;
 	border-radius: 20px;
