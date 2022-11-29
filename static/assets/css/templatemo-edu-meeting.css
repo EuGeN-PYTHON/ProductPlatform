@@ -3119,6 +3119,9 @@ section.meetings-page .categories-filter-form {
 		gap: 10px;
 		margin-bottom: 90px;
 	}
+    section.meetings-page .categories-filter-form {
+	background-color: none;
+}
 }
 section.meetings-page .categories-filter-form select {
 	height: 25px;
