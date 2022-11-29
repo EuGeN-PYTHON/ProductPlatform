@@ -257,6 +257,7 @@ p {
 
 img {
 	width: 100%;
+	height: 100%;
 	overflow: hidden;
 }
 
@@ -3379,7 +3380,6 @@ responsive
 @media (max-width: 992px) {
 	.main-banner .caption {
 		top: 60%;
-		margin-top: 80px;
 	}
 
 	.main-banner .caption h2 {
@@ -3441,6 +3441,14 @@ responsive
 	}
 }
 
+@media (max-width: 520px) {
+	.main-banner .caption {
+		margin-top: 30px;
+	}
+	.section .main-banner {
+		height: 400px;
+	}
+}
 /*
 ---------------------------------------------
 table
