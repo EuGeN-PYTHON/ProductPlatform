@@ -944,7 +944,6 @@ banner
 	position: relative;
 	max-height: 100%;
 	overflow: hidden;
-	height: auto;
 	margin-bottom: -7px;
 }
 
@@ -972,7 +971,6 @@ banner
 }
 
 .main-banner .caption {
-	margin-top: 100px;
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
@@ -1007,6 +1005,7 @@ banner
 	color: #fff;
 	font-size: 14px;
 	max-width: 570px;
+	margin-right: 10px;
 }
 
 .main-banner .caption .main-button-red {
@@ -1020,6 +1019,11 @@ banner
 
 	.main-banner .caption h2 {
 		font-size: 36px;
+	}
+}
+@media screen and (max-width: 350px) {
+	.caption p {
+		max-width: 300px;
 	}
 }
 
@@ -3375,6 +3379,7 @@ responsive
 @media (max-width: 992px) {
 	.main-banner .caption {
 		top: 60%;
+		margin-top: 80px;
 	}
 
 	.main-banner .caption h2 {
