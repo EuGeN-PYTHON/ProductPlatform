@@ -956,16 +956,12 @@ banner
 		max-height: none;
 	}
 }
-@media (max-width: 430px) {
+@media (max-width: 450px) {
 	.main-banner .caption {
 		margin-top: 60px;
 	}
 }
-@media (max-width: 370px) {
-	.main-banner .caption {
-		margin-top: 80px;
-	}
-}
+
 @media (max-width: 357px) {
 	.main-banner .caption {
 		top: 40%;
@@ -973,7 +969,7 @@ banner
 }
 @media (max-width: 340px) {
 	.main-banner .caption {
-		margin-top: 100px;
+		margin-top: 45px;
 	}
 }
 
