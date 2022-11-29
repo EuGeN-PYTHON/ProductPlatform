@@ -955,6 +955,21 @@ banner
 		height: 400px;
 	}
 }
+@media (max-width: 430px) {
+	.main-banner .caption {
+		margin-top: 60px;
+	}
+}
+@media (max-width: 370px) {
+	.main-banner .caption {
+		margin-top: 80px;
+	}
+}
+@media (max-width: 340px) {
+	.main-banner .caption {
+		margin-top: 100px;
+	}
+}
 
 #bg-video {
 	min-width: 100%;
