@@ -2428,6 +2428,18 @@ section.profile .left-info ul li span {
 	color: #f5a425;
 }
 
+/* Вставка */
+@media (max-width: 375) {
+	.button_clear {
+        width: 230px;
+        height: 40px;
+	}
+	.button-green {
+        width: 230px;
+        height: 40px;
+	}
+}
+
 /*
 ---------------------------------------------
 auth login
