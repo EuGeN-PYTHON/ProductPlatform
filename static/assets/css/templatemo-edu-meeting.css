@@ -944,6 +944,7 @@ banner
 	position: relative;
 	max-height: 100%;
 	overflow: hidden;
+	height: auto;
 	margin-bottom: -7px;
 }
 
@@ -971,9 +972,10 @@ banner
 }
 
 .main-banner .caption {
+	margin-top: 100px;
 	position: absolute;
 	top: 50%;
-	/* transform: translateY(-50%); */
+	transform: translateY(-50%);
 }
 
 .main-banner .caption h6 {
