@@ -953,6 +953,7 @@ banner
 	}
 	.section .main-banner {
 		height: 400px;
+		max-height: none;
 	}
 }
 @media (max-width: 430px) {
