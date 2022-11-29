@@ -965,6 +965,11 @@ banner
 		margin-top: 80px;
 	}
 }
+@media (max-width: 357px) {
+	.main-banner .caption {
+		top: 40%;
+	}
+}
 @media (max-width: 340px) {
 	.main-banner .caption {
 		margin-top: 100px;
@@ -3402,7 +3407,7 @@ responsive
 
 @media (max-width: 992px) {
 	.main-banner .caption {
-		top: 60%;
+		top: 50%;
 	}
 
 	.main-banner .caption h2 {
