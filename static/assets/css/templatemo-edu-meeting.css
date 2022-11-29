@@ -951,7 +951,7 @@ banner
 	.main-banner .caption {
 		margin-top: 35px;
 	}
-	.section .main-banner {
+	.main-banner {
 		height: 400px;
 		max-height: none;
 	}
