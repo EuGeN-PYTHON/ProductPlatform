@@ -947,9 +947,9 @@ banner
 	overflow: hidden;
 	margin-bottom: -7px;
 }
-@media (max-width: 520px) {
+@media (max-width: 550px) {
 	.main-banner .caption {
-		margin-top: 30px;
+		margin-top: 35px;
 	}
 	.section .main-banner {
 		height: 400px;
