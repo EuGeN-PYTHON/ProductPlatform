@@ -1022,7 +1022,7 @@ banner
 	}
 }
 @media screen and (max-width: 350px) {
-	.caption p {
+	.main-banner .caption p {
 		max-width: 300px;
 	}
 }
