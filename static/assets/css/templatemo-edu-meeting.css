@@ -841,9 +841,9 @@ header
 		margin-left: 30px;
 	}
 
-	/* .header-area .menu-trigger {
+	.header-area .menu-trigger {
 		display: block !important;
-	} */
+	}
 
 	.header-area .main-nav {
 		overflow: hidden;
@@ -3118,8 +3118,8 @@ section.meetings-page .categories-filter-form {
 		align-items: center;
 		gap: 10px;
 		margin-bottom: 90px;
-        background-color: #3a3a3a;
-        border-radius: 37px;
+		background-color: #3a3a3a;
+		border-radius: 37px;
 	}
 	section.meetings-page .categories-filter-form {
 		background-color: none;
