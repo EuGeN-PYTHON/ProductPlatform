@@ -878,6 +878,8 @@ header
 
 	.header-area .main-nav .nav li a {
 		height: 50px !important;
+		width: max-content;
+		text-align: center;
 		line-height: 50px !important;
 		padding: 0px 40% !important;
 		border: none !important;
