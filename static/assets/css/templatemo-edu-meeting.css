@@ -809,13 +809,9 @@ header
 		display: none;
 	}
 }
-/* Вставка */
 @media (max-width: 992px) {
 	.header-area .menu-trigger {
 		display: block !important;
-	}
-	.header-area .main-nav .nav li {
-		display: none;
 	}
 }
 
