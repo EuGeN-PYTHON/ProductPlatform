@@ -3132,7 +3132,7 @@ section.meetings-page .categories-filter-form {
 		border-radius: 37px;
 	}
 	section.meetings-page .categories-filter-form {
-		background-color: none;
+		background-color: transparent;
 	}
 }
 section.meetings-page .categories-filter-form select {
