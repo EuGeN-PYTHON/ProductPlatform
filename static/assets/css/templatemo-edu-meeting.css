@@ -3110,12 +3110,13 @@ section.meetings-page .categories-filter-form {
 }
 /* Вставка */
 @media (max-width: 560px) {
-	section.meetings-page .categories-filter-form {
+	section.meetings-page .categories-filter-form .filter-fields {
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
-        justify-content: center;
-        align-items: center;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+		margin-bottom: 90px;
 	}
 }
 section.meetings-page .categories-filter-form select {
