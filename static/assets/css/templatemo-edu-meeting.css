@@ -3349,7 +3349,11 @@ section.meetings-page .main-button-red a {
 		width: 100%;
 	}
 }
-
+@media (max-width: 992px){
+section.contact-us .right-info ul li {
+	margin-right: 50px;
+	}
+}
 /*
 ---------------------------------------------
 responsive
