@@ -53,10 +53,8 @@
 		{% endblock %}
 	</head>
 	<body>
-		{% block menu %} {% include 'includes/inc_sub_header.html' %} {% include
-		'includes/inc_menu.html' %} {% endblock %} {% block content %} {% endblock
-		%} {% if user.role == 'Customer' %} {% include
-		'includes/button_create_order.html' %} {% endif %} {% block js %}
+		{% block menu %} {% include 'includes/inc_sub_header.html' %} {% include 'includes/inc_menu.html' %} {% endblock %} {% block content %} 
+		{% endblock	%} {% if user.role == 'Customer' %} {% include 'includes/button_create_order.html' %} {% endif %} {% block js %}
 		<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.js' %}"></script>
 		<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 
