@@ -871,8 +871,8 @@ header
 		width: 100%;
 		background: #fff;
 		border-bottom: 1px solid #eee;
-		padding-left: 0px !important;
-		padding-right: 0px !important;
+		/* padding-left: 0px !important; */
+		/* padding-right: 0px !important; */
 	}
 
 	.header-area .main-nav .nav li a {
