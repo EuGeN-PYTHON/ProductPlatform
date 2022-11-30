@@ -1,7 +1,7 @@
 const statusText = document.querySelectorAll('strong')
 
 function textWrap() {
-	if (document.documentElement.clientWidth > 450) {
+	if (document.documentElement.clientWidth < 450) {
 	statusText.forEach(el => {
 		if (
 			el.innerText.toLowerCase() === 'отменен' ||
