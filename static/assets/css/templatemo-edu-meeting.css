@@ -927,7 +927,7 @@ header
 	}
 }
 
-@media (min-width: 992px) {
+@media (min-width: 767px) {
 	.header-area .main-nav .nav {
 		display: flex !important;
 	}
