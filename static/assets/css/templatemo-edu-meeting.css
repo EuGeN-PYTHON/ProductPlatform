@@ -1431,6 +1431,7 @@ section.order {
 section.order .response {
 	display: flex;
 	justify-content: space-between;
+	gap: 15px;
 }
 
 section.order .order-content .responses {
@@ -1466,7 +1467,7 @@ section.order .line {
 }
 
 section.order .price {
-	padding-right: 28px;
+	padding-right: 15px;
 }
 
 section.order .section-heading {
