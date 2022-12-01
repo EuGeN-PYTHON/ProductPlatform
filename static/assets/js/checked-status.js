@@ -24,9 +24,9 @@ function changeHeight() {
 	if (document.documentElement.clientWidth < 550) {
 	blocksBanner.forEach(el => {
 		if(el.querySelector('img')){
-			el.style = `${el.getAttribute('style')} height:400px;`
+			el.style = "height: 400px;"
 		} else {
-			el.style = `${el.getAttribute('style')} height:215px;`
+			el.style = "height: 215px;"
 	}})
 }
 }
