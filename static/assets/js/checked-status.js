@@ -16,3 +16,18 @@ function textWrap() {
 }
 }
 textWrap()
+
+// Контролирует баннер и его размер
+const blockBanner = document.querySelectorAll('.main-banner')
+
+function changeHeight() {
+	if (document.documentElement.clientWidth < 550) {
+	blocks.forEach(el => {
+		if(el.querySelector('img')){
+			el.style = `${el.getAttribute('style')} height:400px;`
+		} else {
+			el.style = `${el.getAttribute('style')} height:215px;`
+	}})
+}
+}
+changeHeight()
