@@ -3354,6 +3354,17 @@ section.contact-us .right-info ul li {
 	margin-right: 50px;
 	}
 }
+@media (max-width: 767px){
+section.contact-us .right-info ul li {
+  margin-right: 30px;
+}
+}
+@media (max-width: 450px){
+section.contact-us .right-info ul li {
+  margin-right: 10px;
+}
+}
+
 /*
 ---------------------------------------------
 responsive
