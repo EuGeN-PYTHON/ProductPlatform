@@ -168,6 +168,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 TIME_START_CHECK_ORDER_STATUS = ["12:05", "03:00"]  # запуск скрипта, время по москве
 
-db_from_env = dj_database_url.config()
+# db_from_env = dj_database_url.config()
 
 # CORS_ALLOW_ALL_ORIGINS = True
