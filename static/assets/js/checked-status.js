@@ -21,7 +21,7 @@ textWrap()
 const blocksBanner = document.querySelectorAll('.main-banner')
 
 function changeHeight() {
-	if (document.documentElement.clientWidth < 550) {
+	// if (document.documentElement.clientWidth < 550) {
 	blocksBanner.forEach(el => {
 		if(el.querySelector('img')){
 			el.style = "height: 400px;"
@@ -29,5 +29,5 @@ function changeHeight() {
 			el.style = "height: 215px;"
 	}})
 }
-}
+// }
 changeHeight()
