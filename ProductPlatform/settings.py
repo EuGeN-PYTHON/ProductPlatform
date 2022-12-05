@@ -28,7 +28,8 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 # DEBUG = True
 DEBUG = os.environ['DJANGO_DEBUG']
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['www.storefoods.ru',
+                 '*']
 
 # Application definition
 
@@ -81,20 +82,18 @@ WSGI_APPLICATION = 'ProductPlatform.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
     # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'mydatabase',
-        # 'NAME': 'storefood',
-        # 'USER': 'root',
-        # 'USER': 'moderator',
-        # 'PASSWORD': '27June2010',
-        # 'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
-        # 'PORT': '3306',
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'u1861019_db',
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': '31.31.198.35',  # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+    }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'NAME': 'dc18nq7jd8hffp',
