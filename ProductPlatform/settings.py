@@ -28,8 +28,7 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 # DEBUG = True
 DEBUG = os.environ['DJANGO_DEBUG']
 
-ALLOWED_HOSTS = ['www.storefoods.ru',
-                 '*']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -82,18 +81,18 @@ WSGI_APPLICATION = 'ProductPlatform.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'u1861019_db',
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': '31.31.198.35',  # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'u1861019_db',
+    #     'USER': os.environ['DB_USER'],
+    #     'PASSWORD': os.environ['DB_PASSWORD'],
+    #     'HOST': 'localhost',  # Or 31.31.198.35
+    #     'PORT': '3306',
+    # }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'NAME': 'dc18nq7jd8hffp',
@@ -166,7 +165,7 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
 EMAIL_HOST_USER = 'estet.estetikov@yandex.ru'
-DEFAULT_FROM_EMAIL = 'My Kitchen <estet.estetikov@yandex.ru>'
+DEFAULT_FROM_EMAIL = "Store Food's <estet.estetikov@yandex.ru>"
 RECIPIENTS_EMAIL = ['estet.estetikov@yandex.ru']
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 
