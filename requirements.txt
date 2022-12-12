@@ -25,6 +25,7 @@ lazy-object-proxy==1.7.1
 mccabe==0.7.0
 mypy==0.960
 mypy-extensions==0.4.3
+mysqlclient==2.1.1
 packaging==21.3
 phonenumbers==8.12.49
 Pillow==9.1.1

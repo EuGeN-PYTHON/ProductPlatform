@@ -86,13 +86,21 @@ DATABASES = {
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dc18nq7jd8hffp',
-        'HOST': 'ec2-54-228-32-29.eu-west-1.compute.amazonaws.com',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'u1861019_db',
         'USER': os.environ['DB_USER'],
         'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': 'localhost',  # Or 31.31.198.35
+        'PORT': '3306',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'dc18nq7jd8hffp',
+    #     'HOST': 'ec2-54-228-32-29.eu-west-1.compute.amazonaws.com',
+    #     'PORT': 5432,
+    #     'USER': os.environ['DB_USER'],
+    #     'PASSWORD': os.environ['DB_PASSWORD'],
+    # }
 }
 
 # Password validation
@@ -157,7 +165,7 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
 EMAIL_HOST_USER = 'estet.estetikov@yandex.ru'
-DEFAULT_FROM_EMAIL = 'My Kitchen <estet.estetikov@yandex.ru>'
+DEFAULT_FROM_EMAIL = "Store Food's <estet.estetikov@yandex.ru>"
 RECIPIENTS_EMAIL = ['estet.estetikov@yandex.ru']
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 
@@ -168,6 +176,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 TIME_START_CHECK_ORDER_STATUS = ["12:05", "03:00"]  # запуск скрипта, время по москве
 
-db_from_env = dj_database_url.config()
+# db_from_env = dj_database_url.config()
 
 # CORS_ALLOW_ALL_ORIGINS = True
