@@ -81,18 +81,18 @@ WSGI_APPLICATION = 'ProductPlatform.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'u1861019_db',
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': 'localhost',  # Or 31.31.198.35
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'u1861019_db',
+    #     'USER': os.environ['DB_USER'],
+    #     'PASSWORD': os.environ['DB_PASSWORD'],
+    #     'HOST': 'localhost',  # Or 31.31.198.35
+    #     'PORT': '3306',
+    # }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'NAME': 'dc18nq7jd8hffp',

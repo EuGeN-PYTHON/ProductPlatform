@@ -5,7 +5,10 @@ let company_inp = document.querySelector("#company");
 let name_ord = document.querySelector("#name");
 let end_time = document.querySelector("#end_time");
 let category_inp = document.querySelector("#category");
+let quantity_inp = document.querySelector("#quantity");
+let units_inp = document.querySelector("#units_quantity");
 let description_textarea = document.querySelector("#description");
+let adress_textarea = document.querySelector("#delivery_address")
 let edit_btn = document.querySelector("#edit-btn");
 let submit_btn = document.querySelector("#submit-btn");
 const responses = document.querySelector("#res");
@@ -16,17 +19,27 @@ function make_readonly() {
   company_inp.classList.add("read_only");
   name_ord.setAttribute("readonly", "readonly");
   name_ord.classList.add("read_only");
+  quantity_inp.setAttribute("readonly", "readonly");
+  quantity_inp.classList.add("read_only");
   end_time.setAttribute("readonly", "readonly");
   end_time.classList.add("read_only");
   category_inp.setAttribute("disabled", "true");
   category_inp.classList.add("read_only");
+  units_inp.setAttribute("disabled", "true")
+  units_inp.classList.add("read_only");
   description_textarea.setAttribute("readonly", "readonly");
   description_textarea.classList.add("read_only");
+  adress_textarea.setAttribute("readonly","readonly");
+  adress_textarea.classList.add("read_only");
 }
 
 function make_modifiable() {
   category_inp.removeAttribute("disabled");
   category_inp.classList.remove("read_only");
+  units_inp.removeAttribute("disabled");
+  units_inp.classList.remove("read_only");
+  quantity_inp.removeAttribute("readonly");
+  quantity_inp.classList.remove("read_only");
   name_ord.removeAttribute("readonly");
   name_ord.classList.remove("read_only");
   end_time.removeAttribute("readonly");
@@ -34,6 +47,8 @@ function make_modifiable() {
   // end_time.setAttribute("type", "datetime-local");
   description_textarea.removeAttribute("readonly");
   description_textarea.classList.remove("read_only");
+  adress_textarea.removeAttribute("readonly");
+  adress_textarea.classList.remove("read_only");
 }
 
 // function approve_editing() {

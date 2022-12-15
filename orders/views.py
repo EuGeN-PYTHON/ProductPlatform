@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from orders.forms import CreateOrderForm, FeedbackForm, ResponseOrderForm
 from multi_form_view import MultiModelFormView
-from orders.models import CategoryOrder, Order, StatusResponse, ResponseOrder
+from orders.models import CategoryOrder, Order, StatusResponse, ResponseOrder, Agreement
 from users.models import Profile
 from orders.filters import OrderFilter, CategoryFilter
 from django.views import View
@@ -179,6 +179,12 @@ class CreateOrder(LoginRequiredMixin, UserPassesTestMixin, CreateView):
                                          name=form.data.get('name'),
                                          description=form.data.get(
                                              'description'),
+                                         quantity=form.data.get(
+                                             'quantity'),
+                                         units_quantity=form.data.get(
+                                             'units_quantity'),
+                                         delivery_address=form.data.get(
+                                             'delivery_address'),
                                          end_time=form.data.get("end_time"))
             order.save()
             # return HttpResponseRedirect(redirect_to=reverse_lazy('main'))
@@ -189,6 +195,44 @@ class CreateOrder(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def test_func(self):
         return self.request.user.role != 'Supplier'
+
+
+class AgreementView(LoginRequiredMixin, MultiModelFormView):
+    """Класс-обработчик для просмотра договоров"""
+    model = Agreement
+    template_name = 'orders/view_agreement.html'
+
+    # form_classes = {'response_order': ResponseOrderForm}
+
+    def get(self, request, *args, **kwargs):
+        try:
+            id = kwargs.get('pk', None)
+        except KeyError as err:
+            print(err)
+        try:
+            order = get_object_or_404(Order, id=id)
+        except Http404 as err:
+            print(err)
+
+        try:
+            id = kwargs.get('id', None)
+        except KeyError as err:
+            print(err)
+        try:
+            response = get_object_or_404(ResponseOrder, id=id)
+        except Http404 as err:
+            print(err)
+
+        customer = Profile.objects.get(id=order.author.id)
+        supplier = Profile.objects.get(id=response.response_user_id)
+
+        context = {
+            'order': order,
+            'response_orders': response,
+            'supplier': supplier,
+            'customer': customer
+        }
+        return render(request, self.template_name, context=context)
 
 
 class OrderView(LoginRequiredMixin, MultiModelFormView):
@@ -221,7 +265,6 @@ class OrderView(LoginRequiredMixin, MultiModelFormView):
         # print(response_orders)
         responses = []
         not_active_responses_order_users_id = []
-
 
         if user.role == 'Customer':
             response_orders = order.responseorder_set.all()
@@ -503,13 +546,16 @@ class DeleteOrder(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user.is_superuser or self.request.user.is_staff or user_is_author
 
 
-class UpdateOrder(UpdateView):
+class UpdateOrder(LoginRequiredMixin, UpdateView):
     """Класс-обработчик для редактирования заказа"""
     model = Order
     template_name = 'orders/view_order.html'
     fields = [
         "name",
         "category",
+        "quantity",
+        "units_quantity",
+        "delivery_address",
         "end_time",
         "description"
     ]

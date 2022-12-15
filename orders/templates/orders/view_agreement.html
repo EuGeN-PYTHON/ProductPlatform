@@ -1,0 +1,698 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <section class="heading-order header-text" id="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Договор</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="meetings-page create-order" id="meetings">
+        <form id="form" action="#" method="post">
+            {% csrf_token %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            {% if form.errors %}
+                                <div
+                                        class="alert alert-warning alert-dismissible fade show"
+                                        role="alert"
+                                        style="margin-top: 50px"
+                                >
+                                    {{ form.non_field_errors }} {% for error in form %} {{ error.errors }} {% endfor %}
+                                    <button
+                                            type="button"
+                                            class="close"
+                                            data-dismiss="alert"
+                                            aria-label="Close"
+                                    >
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endif %}
+                            <div class="col-lg-12">
+                                <div class="meeting-single-item mb-3">
+                                    {#                                    <div class="thumb">#}
+                                    {##}
+                                    {#                                        <img src="{% static 'assets/images/single-meeting.jpg' %}"#}
+                                    {#                                                alt=""/>#}
+                                    {#                                    </div>#}
+
+                                    <div class="down-content-create_order">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">Заказчик:</label>
+                                                    <input name="cust_name" id="cust_name" required="" type="text" class="form-control"
+                                                   value="{{ customer.comp_name }}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">В лице:</label>
+                                                    <input name="cust_fio" id="cust_fio" required="" type="text" class="form-control"
+                                                    placeholder="Иванова Ивана Ивановича">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">На основании:</label>
+                                                    <input name="cust_dov" id="cust_dov" required="" type="text" class="form-control"
+                                                    placeholder="Устава/Доверенности №... от...">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">Поставщик:</label>
+                                                    <input name="supp_name" id="supp_name" required="" type="text" class="form-control"
+                                                   value="{{ supplier.comp_name }}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">В лице:</label>
+                                                    <input name="supp_fio" id="supp_fio" required="" type="text" class="form-control"
+                                                    placeholder="Петрова Петра Петровича">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">На основании:</label>
+                                                    <input name="supp_dov" id="supp_dov" required="" type="text" class="form-control"
+                                                    placeholder="Устава/Доверенности №... от...">
+                                                </div>
+                                            </div>
+
+
+
+{#                                            <div class="col-lg-4">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">Кол-во:</label>#}
+{#                                                    {{ form.quantity }}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-4">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">Ед.измерения:</label>#}
+{#                                                    {{ form.units_quantity }}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-6">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">Адрес доставки:</label>#}
+{#                                                    {{ form.delivery_address }}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{##}
+{#                                            <div class="col-lg-6">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">Действует до:</label>#}
+{#                                                    {{ form.end_time }}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-12">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <fieldset>#}
+{#                                                        <label class="small mb-1" id="">Описание:</label>#}
+{#                                                        {{ form.description }}#}
+{#                                                    </fieldset>#}
+{#                                                </div>#}
+{#                                            </div>#}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="main-button-red">
+                                        <button
+                                                id="button_clear"
+                                                class="button-red btn-block"
+                                                type="button"
+                                                style="margin-bottom: 15px"
+                                        >
+                                            Очистить форму
+                                        </button>
+                                        <button
+                                                class="button-green"
+                                                role="button"
+                                                aria-pressed="true"
+                                        >
+                                            Создать договор
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        {#        <div class="container">#}
+        {#            <div class="row order-content">#}
+        {#                <div class="col-lg-6 responses" style="padding-left: 0px; padding-right: 0px;">#}
+        {#                    <div class="respons">#}
+        {#                        <h4 class="h-responses">Отклики</h4>#}
+        {#                        <ul id="res">#}
+        {#                            {% for response_order in response_orders %}#}
+        {#                                <li class="col-lg-12 response">#}
+        {#                                    <a href="{% url 'users:profile' response_order.response_user.id %}">#}
+        {#                                        {{ response_order.response_user.comp_name }}#}
+        {#                                    </a>#}
+        {#                                    <div class="line">#}
+        {#                                        <div class="price">{{ response_order.price|floatformat:2 }} ₽</div>#}
+        {##}
+        {#                                        <!--  Info Button -->#}
+        {#                                        <i style="margin-right: 5px" data-bs-toggle="modal"#}
+        {#                                           data-bs-target="#staticBackdrop3_{{ response_order.response_user.id }}"#}
+        {#                                           class="fa fa-info"></i>#}
+        {#                                        <!-- Modal  for Info Button -->#}
+        {#                                        <div class="modal fade"#}
+        {#                                             id="staticBackdrop3_{{ response_order.response_user.id }}"#}
+        {#                                             data-bs-backdrop="static"#}
+        {#                                             data-bs-keyboard="false" tabindex="-1"#}
+        {#                                             aria-labelledby="staticBackdropLabel"#}
+        {#                                             aria-hidden="true">#}
+        {#                                            <div class="modal-dialog modal-dialog-centered">#}
+        {#                                                <div class="modal-content">#}
+        {#                                                    <div class="modal-header">#}
+        {#                                                        <h5 class="modal-title" id="staticBackdropLabel">#}
+        {#                                                            Предложение#}
+        {#                                                            от {{ response_order.response_user.comp_name }}</h5>#}
+        {#                                                        <button type="button" class="btn-close"#}
+        {#                                                                data-bs-dismiss="modal"#}
+        {#                                                                aria-label="Close"></button>#}
+        {#                                                    </div>#}
+        {#                                                    <div class="modal-body">#}
+        {#                                                        {{ response_order.offer }}#}
+        {#                                                    </div>#}
+        {#                                                        <div class="modal-footer">#}
+        {#                                                            <form action="{% url 'orders:order_rejection' response_order.id order.id %}"#}
+        {#                                                                  method="post">#}
+        {#                                                                {% csrf_token %}#}
+        {#                                                                <button type="submit" class="close-btn">Отклонить#}
+        {#                                                                </button>#}
+        {#                                                            </form>#}
+        {#                                                        </div>#}
+        {#                                                </div>#}
+        {#                                            </div>#}
+        {#                                        </div>#}
+        {##}
+        {##}
+        {#                                        {% if user.role != 'Supplier' and order.status == 'Active' and not approved_response and not cancelled_response_response and response_order.last_status == "On Approval" %}#}
+        {#                                            <i data-bs-toggle="modal"#}
+        {#                                               data-bs-target="#staticBackdrop1_{{ response_order.response_user.id }}"#}
+        {#                                               class="fa fa-check accept"></i>#}
+        {#                                            <i data-bs-toggle="modal"#}
+        {#                                               data-bs-target="#staticBackdrop2_{{ response_order.response_user.id }}"#}
+        {#                                               class="fa fa-close cancel"></i>#}
+        {#                                        {% endif %}#}
+        {##}
+        {#                                        <!-- Modal -->#}
+        {##}
+        {#                                        <div class="modal fade"#}
+        {#                                             id="staticBackdrop1_{{ response_order.response_user.id }}"#}
+        {#                                             data-bs-backdrop="static"#}
+        {#                                             data-bs-keyboard="false" tabindex="-1"#}
+        {#                                             aria-labelledby="staticBackdropLabel"#}
+        {#                                             aria-hidden="true">#}
+        {#                                            <div class="modal-dialog modal-dialog-centered">#}
+        {#                                                <div class="modal-content">#}
+        {#                                                    <div class="modal-header">#}
+        {#                                                        <h5 class="modal-title" id="staticBackdropLabel">#}
+        {#                                                            Подтверждение</h5>#}
+        {#                                                        <button type="button" class="btn-close"#}
+        {#                                                                data-bs-dismiss="modal"#}
+        {#                                                                aria-label="Close"></button>#}
+        {#                                                    </div>#}
+        {#                                                    <div class="modal-body">#}
+        {#                                                        Вы действительно уверены, что хотите принять предложение?#}
+        {#                                                    </div>#}
+        {#                                                    <div class="modal-footer">#}
+        {#                                                        <div class="modal-footer">#}
+        {#                                                            <form action="{% url 'orders:order_confirmation' response_order.id order.id %}"#}
+        {#                                                                  method="post">#}
+        {#                                                                {% csrf_token %}#}
+        {#                                                                <button type="submit" class="modal-btn accept-btn">#}
+        {#                                                                    Принять#}
+        {#                                                                </button>#}
+        {#                                                            </form>#}
+        {#                                                        </div>#}
+        {#                                                    </div>#}
+        {#                                                </div>#}
+        {#                                            </div>#}
+        {#                                        </div>#}
+        {##}
+        {#                                        <div class="modal fade"#}
+        {#                                             id="staticBackdrop2_{{ response_order.response_user.id }}"#}
+        {#                                             data-bs-backdrop="static"#}
+        {#                                             data-bs-keyboard="false" tabindex="-1"#}
+        {#                                             aria-labelledby="staticBackdropLabel"#}
+        {#                                             aria-hidden="true">#}
+        {#                                            <div class="modal-dialog modal-dialog-centered">#}
+        {#                                                <div class="modal-content">#}
+        {#                                                    <div class="modal-header">#}
+        {#                                                        <h5 class="modal-title" id="staticBackdropLabel">#}
+        {#                                                            Подтверждение</h5>#}
+        {#                                                        <button type="button" class="btn-close"#}
+        {#                                                                data-bs-dismiss="modal"#}
+        {#                                                                aria-label="Close"></button>#}
+        {#                                                    </div>#}
+        {##}
+        {#                                                    {% if user.role != 'Customer'  and response_order.last_status == 'Cancelled' %}#}
+        {#                                                        <div class="modal-body">#}
+        {#                                                            Вы действительно уверены, что хотите восстановить#}
+        {#                                                            предложение?#}
+        {#                                                        </div>#}
+        {#                                                        <div class="modal-footer">#}
+        {#                                                            <form action="{% url 'orders:order_rejection' response_order.id order.id %}"#}
+        {#                                                                  method="post">#}
+        {#                                                                {% csrf_token %}#}
+        {#                                                                <button type="submit" class="close-btn">Восстановить#}
+        {#                                                                </button>#}
+        {#                                                            </form>#}
+        {#                                                        </div>#}
+        {#                                                    {% else %}#}
+        {#                                                        <div class="modal-body">#}
+        {#                                                            Вы действительно уверены, что хотите отклонить предложение?#}
+        {#                                                        </div>#}
+        {#                                                        <div class="modal-footer">#}
+        {#                                                            <form action="{% url 'orders:order_rejection' response_order.id order.id %}"#}
+        {#                                                                  method="post">#}
+        {#                                                                {% csrf_token %}#}
+        {#                                                                <button type="submit" class="close-btn">Отклонить#}
+        {#                                                                </button>#}
+        {#                                                            </form>#}
+        {#                                                        </div>#}
+        {#                                                    {% endif %}#}
+        {#                                                </div>#}
+        {#                                            </div>#}
+        {#                                        </div>#}
+        {##}
+        {##}
+        {#                                        {% if approved_response and approved_response == response_order %}#}
+        {#                                            <span class="accepted-response">Принят</span>#}
+        {#                                            <a href="#"><i class="fa fa-pencil-square-o"></i></a>#}
+        {#                                        {% elif response_order.last_status == "Not Approved" %}#}
+        {#                                            <span class="not-accepted-response">Отклонен</span>#}
+        {#                                        {% elif approved_response and approved_response != response_order %}#}
+        {#                                            <span class="not-accepted-response">Отклонен</span>#}
+        {#                                        {% endif %}#}
+        {##}
+        {#                                    </div>#}
+        {#                                </li>#}
+        {#                            {% endfor %}#}
+        {#                        </ul>#}
+        {#                        {% if user.role != 'Supplier' and order.status == 'Active' and not approved_response %}#}
+        {##}
+        {#                        {% endif %}#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#                <!-- right side-->#}
+        {#                <div class="col-lg-6">#}
+        {#                    <div class="row">#}
+        {#                        {% if user.role == 'Supplier' %}#}
+        {#                            <div class="order-response">#}
+        {#                                <div class="order">#}
+        {#                                    <div class="h-order col-lg-12">#}
+        {#                                        <div class="col-lg-2" style="width: 72px;"></div>#}
+        {#                                        <div class="col-lg-8 center">{{ order.name }}</div>#}
+        {#                                        <div class="date-position col-lg-2">#}
+        {#                                            С#}
+        {#                                            <div class="date date-start">#}
+        {##}
+        {#                                                <h6>#}
+        {#                                                    {{ order.create_at|date:'b' }}#}
+        {#                                                    <span>#}
+        {#                                                    {{ order.create_at|date:'d' }}#}
+        {#                                                </span>#}
+        {#                                                </h6>#}
+        {#                                            </div>#}
+        {#                                            До#}
+        {#                                            <div class="date">#}
+        {#                                                <h6>#}
+        {#                                                    {{ order.end_time|date:'b' }}#}
+        {#                                                    <span>#}
+        {#                                                    {{ order.end_time|date:'d' }}#}
+        {#                                                </span>#}
+        {#                                                </h6>#}
+        {#                                            </div>#}
+        {#                                        </div>#}
+        {#                                    </div>#}
+        {#                                    <div class="col-lg-12">#}
+        {#                                        <label class="small mb-1" for="company">Компания</label>#}
+        {#                                        <a href="{% url 'users:profile' order.author_id %}">#}
+        {#                                            <div class="read_only order-info">#}
+        {#                                                {{ order.author.comp_name }} на сайте с {{ order.author.date_joined|date:'d.m.y' }}#}
+        {#                                            </div>#}
+        {#                                        </a>#}
+        {#                                    </div>#}
+        {#                                    <div class="col-lg-12">#}
+        {#                                        <label class="small mb-1" for="category">Категория</label>#}
+        {#                                        <div class="read_only order-info">#}
+        {#                                            {{ order.category }}#}
+        {#                                        </div>#}
+        {#                                    </div>#}
+        {#                                    <div class="col-lg-12">#}
+        {#                                        <label class="small description mb-1" for="description">#}
+        {#                                            Описание заказа#}
+        {#                                        </label>#}
+        {#                                        <div class="form-control read_only order-desc">#}
+        {#                                            {{ order.description }}#}
+        {#                                        </div>#}
+        {#                                    </div>#}
+        {#                                </div>#}
+        {#                                <!-- форма update -->#}
+        {#                                <div class="order response-form">#}
+        {#                                    {% if response_id %}#}
+        {#                                        <form id="contact" action="{% url 'orders:response_update' response_id %}"#}
+        {#                                              method="post">#}
+        {#                                    {% else %}#}
+        {#                                        <form id="contact" action="" method="post">#}
+        {#                                    {% endif %}#}
+        {#                                    {% csrf_token %}#}
+        {#                                    <div class="col-lg-12">#}
+        {#                                        <fieldset>#}
+        {#                                            <label class="small mb-1" for="price-suggestion">Предложение</label>#}
+        {##}
+        {#                                            {{ forms.response_order.price }}#}
+        {#                                        </fieldset>#}
+        {#                                    </div>#}
+        {#                                    <div class="col-lg-12">#}
+        {#                                        <fieldset>#}
+        {##}
+        {#                                            {{ forms.response_order.offer }}#}
+        {#                                        </fieldset>#}
+        {#                                    </div>#}
+        {#                                    {% if response_order_user_id not in not_active_responses_order_users_id %}#}
+        {#                                        <div class="col-lg-12 submit-btn">#}
+        {#                                            <fieldset>#}
+        {#                                                <button class="button button-login-reg del" type="submit"#}
+        {#                                                        id="submit-btn"#}
+        {#                                                        data-canceledresponse="false">#}
+        {#                                                    Откликнуться#}
+        {#                                                </button>#}
+        {#                                            </fieldset>#}
+        {#                                            {% if no_approved_response %}#}
+        {#                                                <fieldset>#}
+        {#                                                    <button style="display: none;"#}
+        {#                                                            class="normal-btn close-btn"#}
+        {#                                                            type="submit"#}
+        {#                                                            id="save-btn">#}
+        {#                                                        Сохранить#}
+        {#                                                    </button>#}
+        {#                                                </fieldset>#}
+        {#                                                <div style="display: none;" class="button edit" id="edit-btn">#}
+        {#                                                    Редактировать#}
+        {#                                                </div>#}
+        {#                                            {% endif %}#}
+        {#                                            <div style="display: none;" id="cancel-btn" class="normal-btn close-btn"#}
+        {#                                                 data-bs-toggle="modal" data-bs-target="#staticBackdrop22">#}
+        {#                                                Отменить отклик#}
+        {#                                            </div>#}
+        {#                                        </div>#}
+        {#                                    {% else %}#}
+        {#                                        <div>Вы не можете редактировать или удалять отмененный отклик</div>#}
+        {#                                    {% endif %}#}
+        {#                                    </form>#}
+        {#                                </div>#}
+        {#                            </div>#}
+        {##}
+        {#                            {% if cancellation_not_available or editing_not_available %}#}
+        {#                                <div class="modal fade show" id="denied" data-bs-backdrop="static"#}
+        {#                                     data-bs-keyboard="false" tabindex="-1"#}
+        {#                                     aria-labelledby="staticBackdropLabel" aria-hidden="true">#}
+        {##}
+        {#                                    <div class="modal-dialog modal-dialog-centered">#}
+        {#                                        <div class="modal-content">#}
+        {#                                            <div class="modal-header">#}
+        {#                                                <h5 class="modal-title" id="staticBackdropLabel">Уведомление</h5>#}
+        {#                                                <button type="button" class="btn-close" data-bs-dismiss="modal"#}
+        {#                                                        aria-label="Close"></button>#}
+        {#                                            </div>#}
+        {#                                            <div class="modal-body">#}
+        {#                                                Вы не можете#}
+        {#                                                {% if cancellation_not_available %}#}
+        {#                                                    отменить#}
+        {#                                                {% elif editing_not_available %}#}
+        {#                                                    редактировать#}
+        {#                                                {% endif %}#}
+        {#                                                своё предложение (отклик)#}
+        {#                                                по причине: {{ error }}#}
+        {#                                            </div>#}
+        {#                                            <div class="modal-footer">#}
+        {#                                                <button type="button"#}
+        {#                                                        data-bs-dismiss="modal"#}
+        {#                                                        class="modal-btn c-btn">#}
+        {#                                                    Закрыть#}
+        {#                                                </button>#}
+        {#                                            </div>#}
+        {#                                        </div>#}
+        {#                                    </div>#}
+        {#                                </div>#}
+        {#                            {% endif %}#}
+        {##}
+        {#                        {% else %}#}
+        {#                            <div class="order">#}
+        {#                                <div class="h-order col-lg-12">#}
+        {#                                    <div class="col-lg-2" style="width: 72px;"></div>#}
+        {#                                    <div class="col-lg-8 center">{{ order.name }}</div>#}
+        {#                                    <div class="date-position col-lg-2">#}
+        {##}
+        {#                                        С#}
+        {#                                        <div class="date date-start">#}
+        {#                                            <h6>#}
+        {#                                                {{ order.create_at|date:'b' }}#}
+        {#                                                <span>#}
+        {#                                                    {{ order.create_at|date:'d' }}#}
+        {#                                                </span>#}
+        {#                                            </h6>#}
+        {#                                        </div>#}
+        {#                                        До#}
+        {#                                        <div class="date">#}
+        {#                                            <h6>#}
+        {#                                                {{ order.end_time|date:'b' }}#}
+        {#                                                <span>#}
+        {#                                                    {{ order.end_time|date:'d' }}#}
+        {#                                                </span>#}
+        {#                                            </h6>#}
+        {#                                        </div>#}
+        {#                                    </div>#}
+        {#                                </div>#}
+        {#                                <form id="contact" action="{% url 'orders:update_order' order.id %}" method="post">#}
+        {#                                    {% csrf_token %}#}
+        {#                                    <div class="col-lg-12">#}
+        {#                                        <fieldset>#}
+        {#                                            <label class="small mb-1" for="company">Компания</label>#}
+        {#                                            <a href="{% url 'users:profile' order.author_id %}">#}
+        {#                                                <input name="name" style="cursor: pointer;" class="read_only"#}
+        {#                                                       readonly="readonly" type="text"#}
+        {#                                                       id="company"#}
+        {#                                                       required=""#}
+        {#                                                       value="{{ order.author.comp_name }} на сайте с {{ order.author.date_joined }}">#}
+        {##}
+        {#                                            </a>#}
+        {#                                        </fieldset>#}
+        {#                                    </div>#}
+        {#                                    <div class="col-lg-12">#}
+        {#                                        <fieldset>#}
+        {#                                            <label class="small mb-1" for="name">Наименование</label>#}
+        {#                                            <input name="name" id="name" required="" type="text" class="form-control"#}
+        {#                                                   value="{{ order.name }}">#}
+        {#                                        </fieldset>#}
+        {#                                    </div>#}
+        {#                                    <div class="col-lg-12">#}
+        {#                                        <fieldset>#}
+        {#                                            <label class="small mb-1" for="category">Категория</label>#}
+        {#                                            <select name="category" type="text" id="category" class="form-select"#}
+        {#                                                    required="">#}
+        {#                                                <option value="{{ order.category.id }}">{{ order.category.name }}</option>#}
+        {#                                                {% for category in categories %}#}
+        {#                                                    <option value="{{ category.id }}">{{ category.name }}</option>#}
+        {#                                                {% endfor %}#}
+        {#                                            </select>#}
+        {#                                        </fieldset>#}
+        {#                                    </div>#}
+        {#                                    <div class="col-lg-12">#}
+        {#                                        <fieldset>#}
+        {#                                            <label class="small mb-1" for="end_time">Исполнить до</label>#}
+        {#                                            <input name="end_time" id="end_time" type="datetime-local"#}
+        {#                                                   value="{{ order.end_time|date:"Y-m-d H:m" }}">#}
+        {#                                        </fieldset>#}
+        {#                                    </div>#}
+        {#                                    <div class="col-lg-12">#}
+        {#                                        <fieldset>#}
+        {#                                            <label class="small description mb-1" for="description">Описание</label>#}
+        {#                                            <textarea name="description" type="text" class="form-control"#}
+        {#                                                      id="description"#}
+        {#                                                      placeholder="Описание..."#}
+        {#                                                      required="">{{ order.description }}</textarea>#}
+        {#                                        </fieldset>#}
+        {#                                    </div>#}
+        {#                                    <div class="col-lg-12 submit-btn">#}
+        {#                                        {% if user.is_staff or user.is_admin or order.status == 'Active' %}#}
+        {#                                            <fieldset>#}
+        {#                                                <button style="display: none;"#}
+        {#                                                        class="button edit button-login-reg"#}
+        {#                                                        type="submit"#}
+        {#                                                        id="submit-btn">#}
+        {#                                                    Сохранить#}
+        {#                                                </button>#}
+        {#                                            </fieldset>#}
+        {#                                            <div style="display: none;"#}
+        {#                                                 class="button edit"#}
+        {#                                                 id="edit-btn">#}
+        {#                                                Редактировать#}
+        {#                                            </div>#}
+        {#                                        {% endif %}#}
+        {#                                        {% if user.role == 'Customer' and order.status == 'Active' %}#}
+        {#                                            <div class="modal-btn close-btn"#}
+        {#                                                 data-bs-toggle="modal" data-bs-target="#staticBackdrop3{{ order.id }}">#}
+        {#                                                Отменить#}
+        {#                                            </div>#}
+        {#                                        {% elif user.role == 'Customer' and order.status == 'Not Active' %}#}
+        {#                                        {% elif user.is_staff or user.is_admin %}#}
+        {#                                            <div class="normal-btn {% if order.status == 'Active' %}close-btn{% else %}accept-btn{% endif %}"#}
+        {#                                                 data-bs-toggle="modal"#}
+        {#                                                 data-bs-target="#staticBackdrop3{{ order.id }}">#}
+        {#                                                {% if order.status == 'Active' %}#}
+        {#                                                    Деактивировать#}
+        {#                                                {% else %}#}
+        {#                                                    Активировать#}
+        {#                                                {% endif %}#}
+        {#                                            </div>#}
+        {#                                        {% endif %}#}
+        {#                                    </div>#}
+        {#                                </form>#}
+        {#                            </div>#}
+        {#                        {% endif %}#}
+        {##}
+        {#                        {% if editing_not_available or cancellation_not_available %}#}
+        {#                            <div class="modal fade-show" id="staticBackdrop1" data-bs-backdrop="static"#}
+        {#                                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"#}
+        {#                                 aria-hidden="true">#}
+        {#                                <div class="modal-dialog modal-dialog-centered">#}
+        {#                                    <div class="modal-content">#}
+        {#                                        <div class="modal-header">#}
+        {#                                            <h5 class="modal-title" id="staticBackdropLabel">Уведомление</h5>#}
+        {#                                            <button type="button" class="btn-close" data-bs-dismiss="modal"#}
+        {#                                                    aria-label="Close"></button>#}
+        {#                                        </div>#}
+        {#                                        <div class="modal-body">#}
+        {#                                            Вы не можете#}
+        {#                                            {% if cancellation_not_available %}#}
+        {#                                                отменить#}
+        {#                                            {% elif editing_not_available %}#}
+        {#                                                редактировать#}
+        {#                                            {% endif %}#}
+        {#                                            заказ.#}
+        {#                                        </div>#}
+        {#                                        <div class="modal-footer">#}
+        {#                                            <button type="button"#}
+        {#                                                    data-bs-dismiss="modal"#}
+        {#                                                    class="modal-btn c-btn">#}
+        {#                                                Закрыть#}
+        {#                                            </button>#}
+        {#                                        </div>#}
+        {#                                    </div>#}
+        {#                                </div>#}
+        {#                            </div>#}
+        {##}
+        {#                        {% endif %}#}
+        {#                        <div class="modal fade" id="staticBackdrop3{{ order.id }}" data-bs-backdrop="static"#}
+        {#                             data-bs-keyboard="false" tabindex="-1"#}
+        {#                             aria-labelledby="staticBackdropLabel" aria-hidden="true">#}
+        {#                            <div class="modal-dialog no-margin modal-dialog-centered">#}
+        {#                                <div class="modal-content">#}
+        {#                                    <div class="modal-header">#}
+        {#                                        <h5 class="modal-title" id="staticBackdropLabel">Подтверждение действий</h5>#}
+        {#                                        <button type="button" class="btn-close" data-bs-dismiss="modal"#}
+        {#                                                aria-label="Закрыть"></button>#}
+        {#                                    </div>#}
+        {#                                    <div class="modal-body">#}
+        {#                                        Вы действительно уверены, что хотите {% if order.status == 'Active' %}#}
+        {#                                        Деактивировать{% else %}Активировать{% endif %}?#}
+        {#                                    </div>#}
+        {#                                    <div class="modal-footer">#}
+        {#                                        <div class="row">#}
+        {#                                            <div class="btns">#}
+        {#                                            {% if order.status == 'Active' %}#}
+        {##}
+        {#                                                <form method="POST" action="{% url 'orders:delete_order' order.id %}">#}
+        {#                                                    {% csrf_token %}#}
+        {##}
+        {#                                                    <button class="modal-btn {% if order.status == 'Active' %}close-btn{% else %}accept-btn{% endif %}"#}
+        {#                                                            type="submit">Подтверждаю#}
+        {#                                                    </button>#}
+        {##}
+        {#                                                </form>#}
+        {#                                            {% else %}#}
+        {#                                            <form method="POST" action="{% url 'orders:delete_order' order.id %}">#}
+        {#                                                    {% csrf_token %}#}
+        {##}
+        {#                                                    <button class="modal-btn {% if order.status == 'Active' %}close-btn{% else %}accept-btn{% endif %}"#}
+        {#                                                            type="submit">Подтверждаю#}
+        {#                                                    </button>#}
+        {##}
+        {#                                                </form>#}
+        {##}
+        {#                                            {% endif %}#}
+        {#                                            </div>#}
+        {#                                        </div>#}
+        {#                                    </div>#}
+        {#                                </div>#}
+        {#                            </div>#}
+        {#                        </div>#}
+        {##}
+        {#                        <!-- Modal sure delete response-->#}
+        {#                        <div class="modal fade" id="staticBackdrop22" data-bs-backdrop="static"#}
+        {#                             data-bs-keyboard="false" tabindex="-1"#}
+        {#                             aria-labelledby="staticBackdropLabel" aria-hidden="true">#}
+        {#                            <div class="modal-dialog no-margin modal-dialog-centered">#}
+        {#                                <div class="modal-content">#}
+        {#                                    <div class="modal-header">#}
+        {#                                        <h5 class="modal-title" id="staticBackdropLabel">Подтверждение действий</h5>#}
+        {#                                        <button type="button" class="btn-close" data-bs-dismiss="modal"#}
+        {#                                                aria-label="Закрыть"></button>#}
+        {#                                    </div>#}
+        {#                                    <div class="modal-body">#}
+        {#                                        Вы действительно уверены, что хотите удалить свой отклик?#}
+        {#                                    </div>#}
+        {#                                    <div class="modal-footer">#}
+        {#                                        <div class="row">#}
+        {#                                            <div class="btns">#}
+        {#                                                {% if response_id %}#}
+        {#                                                    <form method="POST"#}
+        {#                                                          action="{% url 'orders:response_delete' response_id %}">#}
+        {#                                                {% else %}#}
+        {#                                                    <form method="POST" action="">#}
+        {#                                                {% endif %}#}
+        {#                                                {% csrf_token %}#}
+        {#                                                <button class="modal-btn close-btn"#}
+        {#                                                        type="submit">Подтверждаю#}
+        {#                                                </button>#}
+        {##}
+        {#                                                </form>#}
+        {#                                            </div>#}
+        {#                                        </div>#}
+        {#                                    </div>#}
+        {#                                </div>#}
+        {#                            </div>#}
+        {#                        </div>#}
+        {##}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+
+
+        {% include 'includes/inc_footer.html' %}
+
+    </section>
+{% endblock %}

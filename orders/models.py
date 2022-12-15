@@ -22,11 +22,11 @@ class CategoryOrder(models.Model):
         return f'{self.name}'
 
     def delete(self, using=None, keep_parents=False):
-         if self.is_active == True:
-             self.is_active = False
-         elif self.is_active == False:
-             self.is_active = True
-         self.save()
+        if self.is_active == True:
+            self.is_active = False
+        elif self.is_active == False:
+            self.is_active = True
+        self.save()
 
 
 class Order(models.Model):
@@ -35,11 +35,20 @@ class Order(models.Model):
         ('Active', 'Активно'),
         ('Not Active', 'Не активно')
     ]
+    units_choice = [
+        ('kg.', 'кг.'),
+        ('g.', 'г.'),
+        ('l.', 'л.'),
+        ('pc.', 'шт.'),
+    ]
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='Компания')
     category = models.ForeignKey(CategoryOrder, on_delete=models.PROTECT, verbose_name='Категория')
     name = models.CharField(max_length=120, verbose_name='Название')
     description = models.TextField(verbose_name='Описание заказа')
-    # quantity = models.IntegerField(verbose_name='Количество')
+    quantity = models.FloatField(default=0, verbose_name='Количество')
+    units_quantity = models.CharField(choices=units_choice,
+                              max_length=120, verbose_name='Единицы измерения')
+    delivery_address = models.TextField(verbose_name='Адрес доставки')
     status = models.CharField(choices=status_choice,
                               max_length=120, default='Active', verbose_name='Статус')
     create_at = models.DateTimeField(auto_now_add=True)
@@ -60,19 +69,19 @@ class Order(models.Model):
                 status_response = StatusResponse.objects.filter(response_order_id=response.id).last()
                 if status_response.status == "On Approval":
                     StatusResponse.objects.create(response_order_id=response.id,
-                                                status='Not Approved',
-                                                user_initiator=self.author)
+                                                  status='Not Approved',
+                                                  user_initiator=self.author)
 
                 # if response.status == 'On Approval':
                 #     response.status = 'Not Approved'
                 #     response.save()
 
     def delete(self, using=None, keep_parents=False):
-         if self.status == 'Active':
-             self.status = 'Not Active'
-         elif self.status == 'Not Active':
-             self.status = 'Active'
-         self.save()
+        if self.status == 'Active':
+            self.status = 'Not Active'
+        elif self.status == 'Not Active':
+            self.status = 'Active'
+        self.save()
 
 
 class ResponseOrder(models.Model):
@@ -95,15 +104,16 @@ class ResponseOrder(models.Model):
     def save(self, *args, **kwargs):
         super(ResponseOrder, self).save(*args, **kwargs)
         StatusResponse.objects.create(response_order=self,
-                                            status='On Approval',
-                                            user_initiator=self.response_user)
-    
+                                      status='On Approval',
+                                      user_initiator=self.response_user)
+
 
 class StatusResponse(models.Model):
     '''Статус отклика для избежания UPDATE таблицы RESPONSE_ORDER'''
     status_choice = [
         ('On Approval', 'На согласовании'),
         ('Approved', 'Утвержден'),
+        ('Pre-approved', 'Предварительно одобрен'),
         ('Not Approved', 'Не утвержден'),
         ('Cancelled', 'Отменен')
     ]
@@ -129,7 +139,6 @@ class StatusResponse(models.Model):
             obj.save()
 
 
-
 class Feedback(models.Model):
     name_user = models.CharField(max_length=50, verbose_name='Имя пользователя')
     email = models.EmailField(verbose_name='Почта')
@@ -142,3 +151,9 @@ class Feedback(models.Model):
 
     def __str__(self):
         return f'Сообщение от {self.name_user}'
+
+
+class Agreement(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Заказ')
+    response_order = models.ForeignKey(ResponseOrder, on_delete=models.CASCADE, verbose_name='Отклик на заказ')
+    document = models.FilePathField(path='documents/')

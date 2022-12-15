@@ -52,6 +52,9 @@ function get_data(result) {
   comp_name = res3['data']['name']['full_with_opf'];
   comp_name = comp_name.toLowerCase();
   city = res3['data']['address']['data']['city'];
+  address = res3['data']['address']['value'];
+  inn = res3['data']['inn']
+  kpp = res3['data']['kpp']
   status_company = res3['data']['state']['status'];
   show_hide_input(comp_name, city, status_company);
 }

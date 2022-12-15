@@ -11,7 +11,7 @@ class CreateOrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['category', 'name', 'description', 'end_time']
+        fields = ['category', 'name', 'description', 'end_time', 'quantity', 'delivery_address', 'units_quantity']
         widgets = {
             'end_time': (DateInput(attrs={'type': 'datetime-local'}))
         }
@@ -24,6 +24,15 @@ class CreateOrderForm(forms.ModelForm):
 
         self.fields['category'].widget.attrs['placeholder'] = "Выберите категорию"
         self.fields['category'].widget.attrs['aria-describedby'] = "inputGroup-sizing-sm"
+
+        self.fields['quantity'].widget.attrs['placeholder'] = "Введите количество"
+        self.fields['quantity'].widget.attrs['aria-describedby'] = "inputGroup-sizing-sm"
+
+        self.fields['units_quantity'].widget.attrs['placeholder'] = "Выберите единицу измерения"
+        # self.fields['units_quantity'].widget.attrs['aria-describedby'] = "inputGroup-sizing-sm"
+
+        self.fields['delivery_address'].widget.attrs['placeholder'] = "Введите адрес доставки"
+        self.fields['delivery_address'].widget.attrs['aria-describedby'] = "inputGroup-sizing-sm"
 
         self.fields['end_time'].widget.attrs['min'] = datetime.now().strftime(
             "%Y-%m-%d %H:%M")
