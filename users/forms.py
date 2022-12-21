@@ -42,7 +42,8 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = Profile
         fields = ('username', 'email', 'first_name',
-                  'last_name', 'password1', 'password2', 'city', 'ogrn', 'comp_name', 'role', 'phone_number', 'bio')
+                  'last_name', 'password1', 'password2', 'city', 'ogrn', 'comp_name', 'role',
+                  'phone_number', 'bio', 'inn', 'kpp', 'address')
 
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
@@ -57,6 +58,14 @@ class UserRegisterForm(UserCreationForm):
         self.fields['ogrn'].widget.attrs['placeholder'] = "ОГРН или ЕГРИП"
         self.fields['comp_name'].widget.attrs['placeholder'] = "Название компании"
         self.fields['comp_name'].widget.attrs['readonly'] = "readonly"
+
+        self.fields['inn'].widget.attrs['placeholder'] = "ИНН"
+        self.fields['inn'].widget.attrs['readonly'] = "readonly"
+        self.fields['kpp'].widget.attrs['placeholder'] = "КПП"
+        self.fields['kpp'].widget.attrs['readonly'] = "readonly"
+        self.fields['address'].widget.attrs['placeholder'] = "Адрес компании"
+        self.fields['address'].widget.attrs['readonly'] = "readonly"
+
         self.fields['role'].widget.attrs['placeholder'] = "Заказчик/Поставщик"
         self.fields['phone_number'].widget.attrs['placeholder'] = "Контактный телефон"
         self.fields['bio'].widget.attrs['placeholder'] = "Описание"

@@ -10,6 +10,9 @@ var input_form_city = document.querySelector('#id_city');
 var message_text = document.querySelector('#message');
 var input_ogrn = document.querySelector('#id_ogrn');
 var group_input = document.querySelector('#orgn-group-input');
+var input_inn = document.querySelector('#id_inn');
+var input_kpp = document.querySelector('#id_kpp');
+var input_address = document.querySelector('#id_address');
 
 message('Введите 13 или 15 цифр.');
 
@@ -56,14 +59,17 @@ function get_data(result) {
   inn = res3['data']['inn']
   kpp = res3['data']['kpp']
   status_company = res3['data']['state']['status'];
-  show_hide_input(comp_name, city, status_company);
+  show_hide_input(comp_name, city, status_company, address, inn, kpp);
 }
 
-function show_hide_input(comp_name, city, status_company) {
+function show_hide_input(comp_name, city, status_company, address, inn, kpp) {
   if (status_company == 'ACTIVE') {
     input_form.style.display = 'block';
     input_form_name.value = comp_name[0].toUpperCase() + comp_name.slice(1);
     input_form_city.value = city;
+    input_inn.value = inn;
+    input_kpp.value = kpp;
+    input_address.value = address;
     register_button.style.display = 'block';
     input_ogrn.setAttribute('readonly', 'readonly');
     ogrn_button.style.display = 'none';
