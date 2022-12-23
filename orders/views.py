@@ -141,6 +141,14 @@ class Category(LoginRequiredMixin, DetailView):
                                                     'top_suppliers': unique_responses})
 
 
+class CreateAgreement(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """Класс-обработчик для создания Соглашения"""
+    model = Agreement
+    template_name = 'orders/create_order.html'
+    form_class = CreateOrderForm
+    title = 'Создание соглашения'
+    success_url = reverse_lazy('main')
+
 class CreateOrder(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """Класс-обработчик для создания Заказа"""
     model = Order
