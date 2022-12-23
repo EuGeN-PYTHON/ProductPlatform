@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Договор</h2>
+                    <h2>Соглашение</h2>
                 </div>
             </div>
         </div>
@@ -53,6 +53,27 @@
                                                    value="{{ customer.comp_name }}" readonly="readonly">
                                                 </div>
                                             </div>
+                                            <div class="col-lg-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">Юр. адрес</label>
+                                                    <input name="cust_address" id="cust_address" required="" type="text" class="form-control"
+                                                   value="{{ customer.address }}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">ИНН</label>
+                                                    <input name="cust_inn" id="cust_inn" required="" type="text" class="form-control"
+                                                    value="{{ customer.inn }}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">КПП</label>
+                                                    <input name="cust_kpp" id="cust_kpp" required="" type="text" class="form-control"
+                                                    value="{{ customer.kpp }}" readonly="readonly">
+                                                </div>
+                                            </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="small mb-1" id="">В лице:</label>
@@ -75,6 +96,27 @@
                                                    value="{{ supplier.comp_name }}" readonly="readonly">
                                                 </div>
                                             </div>
+                                            <div class="col-lg-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">Юр. адрес</label>
+                                                    <input name="supp_address" id="supp_address" required="" type="text" class="form-control"
+                                                   value="{{ supplier.address }}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">ИНН</label>
+                                                    <input name="supp_inn" id="supp_inn" required="" type="text" class="form-control"
+                                                    value="{{ supplier.inn }}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">КПП</label>
+                                                    <input name="supp_kpp" id="supp_kpp" required="" type="text" class="form-control"
+                                                    value="{{ supplier.kpp }}" readonly="readonly">
+                                                </div>
+                                            </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="small mb-1" id="">В лице:</label>
@@ -89,8 +131,27 @@
                                                     placeholder="Устава/Доверенности №... от...">
                                                 </div>
                                             </div>
-
-
+                                            <div class="col-lg-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">Предмет соглашения:</label>
+                                                    <input name="agr_order_name" id="agr_order_name" required="" type="text" class="form-control"
+                                                   value="{{ order.name }} в количестве {{ order.quantity }} {{ order.get_units_quantity_display }}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">Доставить по адресу:</label>
+                                                    <input name="agr_delivery_address" id="agr_delivery_address" required="" type="text" class="form-control"
+                                                   value="{{ order.delivery_address }}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" id="">Стоимость услуги:</label>
+                                                    <input name="agr_price" id="agr_price" required="" type="text" class="form-control"
+                                                   value="{{ response_orders.price }} руб." readonly="readonly">
+                                                </div>
+                                            </div>
 
 {#                                            <div class="col-lg-4">#}
 {#                                                <div class="mb-3">#}
@@ -143,7 +204,7 @@
                                                 role="button"
                                                 aria-pressed="true"
                                         >
-                                            Создать договор
+                                            Создать соглашение
                                         </button>
                                     </div>
                                 </div>

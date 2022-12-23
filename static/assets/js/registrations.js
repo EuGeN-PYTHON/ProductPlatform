@@ -10,9 +10,9 @@ var input_form_city = document.querySelector('#id_city');
 var message_text = document.querySelector('#message');
 var input_ogrn = document.querySelector('#id_ogrn');
 var group_input = document.querySelector('#orgn-group-input');
-var input_inn = document.querySelector('#id_inn');
-var input_kpp = document.querySelector('#id_kpp');
-var input_address = document.querySelector('#id_address');
+var input_form_inn = document.querySelector('#id_inn');
+var input_form_kpp = document.querySelector('#id_kpp');
+var input_form_address = document.querySelector('#id_address');
 
 message('Введите 13 или 15 цифр.');
 
@@ -67,9 +67,9 @@ function show_hide_input(comp_name, city, status_company, address, inn, kpp) {
     input_form.style.display = 'block';
     input_form_name.value = comp_name[0].toUpperCase() + comp_name.slice(1);
     input_form_city.value = city;
-    input_inn.value = inn;
-    input_kpp.value = kpp;
-    input_address.value = address;
+    input_form_address.value = address;
+    input_form_inn.value = inn;
+    input_form_kpp.value = kpp;
     register_button.style.display = 'block';
     input_ogrn.setAttribute('readonly', 'readonly');
     ogrn_button.style.display = 'none';

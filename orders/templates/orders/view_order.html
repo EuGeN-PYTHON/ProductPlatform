@@ -214,6 +214,30 @@
                                         </a>
                                     </div>
                                     <div class="col-lg-12">
+                                        <label class="small mb-1" for="quantity">
+                                            Количество
+                                        </label>
+                                        <div class="read_only order-info">
+                                            {{ order.quantity }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label class="small mb-1" for="units_quantity">
+                                            Единицы
+                                        </label>
+                                        <div class="read_only order-info">
+                                            {{ order.units_quantity }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label class="small mb-1" for="delivery_address">
+                                            Адрес доставки
+                                        </label>
+                                        <div class="read_only order-info">
+                                            {{ order.delivery_address }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
                                         <label class="small mb-1" for="category">Категория</label>
                                         <div class="read_only order-info">
                                             {{ order.category }}

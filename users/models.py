@@ -23,8 +23,8 @@ class Profile(AbstractUser):
     role = models.CharField(choices=company_choice,
                             max_length=120, verbose_name='Роль')
     bio = models.TextField(verbose_name='Описание', blank=True, )
-    inn = models.CharField(verbose_name='ИНН', blank=True, unique=True, max_length=13)
-    kpp = models.CharField(verbose_name='КПП', blank=True, unique=True, max_length=9)
+    inn = models.CharField(verbose_name='ИНН', unique=True, max_length=13)
+    kpp = models.CharField(verbose_name='КПП', unique=True, max_length=9)
     address = models.TextField(verbose_name='Юридический адрес')
 
     class Meta:
