@@ -220,6 +220,7 @@ class PersonalHistoryOrdersView(LoginRequiredMixin, UserPassesTestMixin, ListVie
                 'response_approved': approved_response_user_id
             })
         page = self.request.GET.get('page')
+        history_orders.reverse()
         paginator = Paginator(history_orders, per_page=3)
         try:
             orders_paginator = paginator.page(page)

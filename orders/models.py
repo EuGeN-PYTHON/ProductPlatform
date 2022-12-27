@@ -157,3 +157,7 @@ class Agreement(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Заказ')
     response_order = models.ForeignKey(ResponseOrder, on_delete=models.CASCADE, verbose_name='Отклик на заказ')
     document = models.FilePathField(path='documents/')
+    customer_signer = models.CharField(verbose_name='ФИО подписанта Заказчика',max_length=200, blank=True)
+    customer_attorney = models.CharField(verbose_name='Документ Заказчика',max_length=200, blank=True)
+    supplier_signer = models.CharField(verbose_name='ФИО подписанта Поставщика', max_length=200, blank=True)
+    supplier_attorney = models.CharField(verbose_name='Документ Поставщика', max_length=200, blank=True)

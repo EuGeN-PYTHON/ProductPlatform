@@ -3,7 +3,7 @@ from datetime import datetime
 from django import forms
 from django.forms import SelectDateWidget, DateInput
 
-from orders.models import Order, Feedback, ResponseOrder
+from orders.models import Order, Feedback, ResponseOrder, Agreement
 
 
 class CreateOrderForm(forms.ModelForm):
@@ -95,3 +95,26 @@ class ResponseOrderForm(forms.ModelForm):
         self.fields['offer'].widget.attrs['required'] = 'True'
         self.fields['offer'].widget.attrs['name'] = 'message'
         self.fields['offer'].widget.attrs['class'] = 'form-control'
+
+
+class CreateAgreementForm(forms.ModelForm):
+    """Форма для изменения данных в Соглашении"""
+
+    class Meta:
+        model = Agreement
+        fields = ['customer_signer', 'customer_attorney', 'supplier_signer', 'supplier_attorney']
+
+    def __init__(self, *args, **kwargs):
+        super(CreateAgreementForm, self).__init__(*args, **kwargs)
+
+        self.fields['customer_signer'].widget.attrs['placeholder'] = "Петрова Петра Петровича"
+        self.fields['customer_signer'].widget.attrs['aria-describedby'] = "inputGroup-sizing-sm"
+
+        self.fields['customer_attorney'].widget.attrs['placeholder'] = "Устава/Доверенности №... от..."
+        self.fields['customer_attorney'].widget.attrs['aria-describedby'] = "inputGroup-sizing-sm"
+
+        self.fields['supplier_signer'].widget.attrs['placeholder'] = "Иванова Ивана Ивановича"
+        self.fields['supplier_signer'].widget.attrs['aria-describedby'] = "inputGroup-sizing-sm"
+
+        self.fields['supplier_attorney'].widget.attrs['placeholder'] = "Устава/Доверенности №... от..."
+        self.fields['supplier_attorney'].widget.attrs['aria-describedby'] = "inputGroup-sizing-sm"

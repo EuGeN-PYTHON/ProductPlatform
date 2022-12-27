@@ -8,13 +8,14 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from orders.forms import CreateOrderForm, FeedbackForm, ResponseOrderForm
+from orders.forms import CreateOrderForm, FeedbackForm, ResponseOrderForm, CreateAgreementForm
 from multi_form_view import MultiModelFormView
 from orders.models import CategoryOrder, Order, StatusResponse, ResponseOrder, Agreement
 from users.models import Profile
 from orders.filters import OrderFilter, CategoryFilter
 from django.views import View
 from django.contrib.auth.decorators import login_required, user_passes_test
+from utils.document_agreement import get_path_document
 
 from orders.decorators import order_board_check
 
@@ -144,10 +145,39 @@ class Category(LoginRequiredMixin, DetailView):
 class CreateAgreement(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """Класс-обработчик для создания Соглашения"""
     model = Agreement
-    template_name = 'orders/create_order.html'
-    form_class = CreateOrderForm
+    template_name = 'orders/view_agreement.html'
+    form_class = CreateAgreementForm
     title = 'Создание соглашения'
-    success_url = reverse_lazy('main')
+
+    def post(self, request, *args, **kwargs):
+
+        session_user = request.user
+        if session_user.get_username() == '':
+            return HttpResponseRedirect(redirect_to=reverse_lazy('users:register'))
+        form = self.get_form()
+        order = Order.objects.get(id=int(kwargs.get('pk')))
+        response_order = ResponseOrder.objects.get(id=int(kwargs.get('id')))
+        if form.is_valid():
+            path = get_path_document('1','2','3')
+            agreement = Agreement.objects.create(order=order,
+                                         response_order=response_order,
+                                         document=path,
+                                         customer_signer=form.data.get(
+                                             'cust_fio'),
+                                         customer_attorney=form.data.get(
+                                             'cust_dov'),
+                                         supplier_signer=form.data.get(
+                                             'supp_fio'),
+                                         supplier_attorney=form.data.get(
+                                             'supp_dov'))
+            agreement.save()
+            return redirect('orders:view_order', pk=order.id)
+
+        else:
+            return self.form_invalid(form)
+
+    def test_func(self):
+        return self.request.user.role != 'Supplier'
 
 class CreateOrder(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """Класс-обработчик для создания Заказа"""

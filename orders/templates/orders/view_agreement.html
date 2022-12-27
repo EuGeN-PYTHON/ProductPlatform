@@ -13,7 +13,7 @@
         </div>
     </section>
     <section class="meetings-page create-order" id="meetings">
-        <form id="form" action="#" method="post">
+        <form id="form" action="{% url 'orders:create_agreement' order.id response_orders.id %}" method="post">
             {% csrf_token %}
             <div class="container">
                 <div class="row">
