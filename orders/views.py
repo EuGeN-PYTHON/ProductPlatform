@@ -158,21 +158,24 @@ class CreateAgreement(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         order = Order.objects.get(id=int(kwargs.get('pk')))
         response_order = ResponseOrder.objects.get(id=int(kwargs.get('id')))
         if form.is_valid():
-            path = get_path_document('1','2','3')
-            agreement = Agreement.objects.create(order=order,
-                                         response_order=response_order,
-                                         document=path,
-                                         customer_signer=form.data.get(
-                                             'cust_fio'),
-                                         customer_attorney=form.data.get(
-                                             'cust_dov'),
-                                         supplier_signer=form.data.get(
-                                             'supp_fio'),
-                                         supplier_attorney=form.data.get(
-                                             'supp_dov'))
-            agreement.save()
-            return redirect('orders:view_order', pk=order.id)
-
+            chek_agreement = Agreement.objects.filter(response_order=response_order)
+            if len(chek_agreement) == 0:
+                agreement = Agreement.objects.create(order=order,
+                                             response_order=response_order,
+                                             customer_signer=form.data.get(
+                                                 'cust_fio'),
+                                             customer_attorney=form.data.get(
+                                                 'cust_dov'),
+                                             supplier_signer=form.data.get(
+                                                 'supp_fio'),
+                                             supplier_attorney=form.data.get(
+                                                 'supp_dov'))
+                path = get_path_document(request, order, response_order, form, agreement)
+                agreement.document = path
+                agreement.save()
+                return redirect('orders:view_order', pk=order.id)
+            else:
+                return redirect('orders:view_order', pk=order.id)
         else:
             return self.form_invalid(form)
 
@@ -374,7 +377,8 @@ class OrderView(LoginRequiredMixin, MultiModelFormView):
             'forms': forms,
             'response_id': response_id,
             'response_order_user_id': self.request.user.id,
-            'not_active_responses_order_users_id': not_active_responses_order_users_id
+            'not_active_responses_order_users_id': not_active_responses_order_users_id,
+            'sign_agreement': sign_agreement
 
         }
         return render(request, self.template_name, context=context)
