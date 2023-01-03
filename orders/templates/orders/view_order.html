@@ -157,7 +157,9 @@
 
                                         {% if approved_response and approved_response == response_order %}
                                             <span class="accepted-response">Принят</span>
-                                            <a href="{% url 'orders:view_agreement' order.id response_order.id %}"><i class="fa fa-pencil-square-o"></i></a>
+                                            {% if no_sign_agreement %}
+                                                <a href="{% url 'orders:view_agreement' order.id response_order.id %}"><i class="fa fa-pencil-square-o"></i></a>
+                                            {% endif %}
                                         {% elif response_order.last_status == "Not Approved" %}
                                             <span class="not-accepted-response">Отклонен</span>
                                             {#                                        {% elif approved_response and approved_response != response_order %}#}

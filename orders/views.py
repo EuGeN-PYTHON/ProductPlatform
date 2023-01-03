@@ -301,6 +301,14 @@ class OrderView(LoginRequiredMixin, MultiModelFormView):
             cancelled_response = True
         else:
             no_approved_response = True
+        try:
+            agreement = Agreement.objects.get(response_order__order=order)
+            if agreement:
+                no_sign_agreement = False
+            else:
+                no_sign_agreement = True
+        except:
+            no_sign_agreement = True
         user = request.user
         # response_orders = order.responseorder_set.all()
         # print(response_orders)
@@ -378,7 +386,7 @@ class OrderView(LoginRequiredMixin, MultiModelFormView):
             'response_id': response_id,
             'response_order_user_id': self.request.user.id,
             'not_active_responses_order_users_id': not_active_responses_order_users_id,
-            'sign_agreement': sign_agreement
+            'no_sign_agreement': no_sign_agreement
 
         }
         return render(request, self.template_name, context=context)

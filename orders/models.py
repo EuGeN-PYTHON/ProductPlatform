@@ -47,7 +47,7 @@ class Order(models.Model):
     description = models.TextField(verbose_name='Описание заказа')
     quantity = models.FloatField(default=0, verbose_name='Количество')
     units_quantity = models.CharField(choices=units_choice,
-                              max_length=120, verbose_name='Единицы измерения')
+                                      max_length=120, verbose_name='Единицы измерения')
     delivery_address = models.TextField(verbose_name='Адрес доставки')
     status = models.CharField(choices=status_choice,
                               max_length=120, default='Active', verbose_name='Статус')
@@ -157,7 +157,31 @@ class Agreement(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Заказ')
     response_order = models.ForeignKey(ResponseOrder, on_delete=models.CASCADE, verbose_name='Отклик на заказ')
     document = models.FilePathField(path='documents/')
-    customer_signer = models.CharField(verbose_name='ФИО подписанта Заказчика',max_length=200, blank=True)
-    customer_attorney = models.CharField(verbose_name='Документ Заказчика',max_length=200, blank=True)
+    customer_signer = models.CharField(verbose_name='ФИО подписанта Заказчика', max_length=200, blank=True)
+    customer_attorney = models.CharField(verbose_name='Документ Заказчика', max_length=200, blank=True)
     supplier_signer = models.CharField(verbose_name='ФИО подписанта Поставщика', max_length=200, blank=True)
     supplier_attorney = models.CharField(verbose_name='Документ Поставщика', max_length=200, blank=True)
+    create_date = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        super(Agreement, self).save(*args, **kwargs)
+        StatusAgreement.objects.create(agreement=self,
+                                      status='Created',
+                                      user_initiator=self.order.author)
+
+
+class StatusAgreement(models.Model):
+    '''Статус Соглашения для избежания UPDATE таблицы AGREEMENT'''
+    status_choice = [
+        ('Created', 'Создано'),
+        ('Supplier-Signed', 'Подписан Поставщиком'),
+        ('Customer-Signed', 'Подписан Заказчиком'),
+        ('Signed', 'Документ подписан'),
+        ('Cancelled', 'Отменен')
+    ]
+
+    agreement = models.ForeignKey(Agreement, on_delete=models.CASCADE, verbose_name='Соглашение')
+    status = models.CharField(choices=status_choice,
+                              max_length=120, verbose_name='Статус', default='On Approval')
+    time_status = models.DateTimeField(auto_now_add=True)
+    user_initiator = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='Пользователь инициатор')
