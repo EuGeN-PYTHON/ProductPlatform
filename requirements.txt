@@ -1,9 +1,11 @@
 anyio==3.6.1
+appscript==1.2.2
 asgiref==3.5.2
 astroid==2.11.5
 atomicwrites==1.4.0
 attrs==21.4.0
 autopep8==1.6.0
+Babel==2.11.0
 certifi==2022.5.18.1
 colorama==0.4.4
 dadata==21.10.1
@@ -15,6 +17,9 @@ django-filter==22.1
 django-multi-form-view==2.0.1
 django-phonenumber-field==6.1.0
 docx==0.2.4
+docx2pdf==0.1.8
+docxcompose==1.4.0
+docxtpl==0.16.4
 gunicorn==20.1.0
 h11==0.12.0
 httpcore==0.15.0
@@ -22,8 +27,10 @@ httpx==0.23.0
 idna==3.3
 iniconfig==1.1.1
 isort==5.10.1
+Jinja2==3.1.2
 lazy-object-proxy==1.7.1
 lxml==4.9.2
+MarkupSafe==2.1.1
 mccabe==0.7.0
 mypy==0.960
 mypy-extensions==0.4.3
@@ -37,11 +44,13 @@ psycopg2-binary==2.9.5
 py==1.11.0
 pycodestyle==2.8.0
 pylint==2.13.9
+pypandoc==1.10
 pyparsing==3.0.9
 pytest==7.1.2
 python-dateutil==2.8.2
 python-docx==0.8.11
 python-dotenv==0.21.0
+pytz==2022.7
 rfc3986==1.5.0
 schedule==1.1.0
 six==1.16.0
@@ -49,6 +58,7 @@ sniffio==1.2.0
 sqlparse==0.4.2
 toml==0.10.2
 tomli==2.0.1
+tqdm==4.64.1
 typing_extensions==4.2.0
 tzdata==2022.1
 whitenoise==6.2.0

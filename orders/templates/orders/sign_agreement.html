@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="heading-order header-text" id="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Соглашение</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="meetings-page create-order" id="meetings">
+        <form id="form" action="#" method="post">
+            {% csrf_token %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            {% if form.errors %}
+                                <div
+                                        class="alert alert-warning alert-dismissible fade show"
+                                        role="alert"
+                                        style="margin-top: 50px"
+                                >
+                                    {{ form.non_field_errors }} {% for error in form %} {{ error.errors }} {% endfor %}
+                                    <button
+                                            type="button"
+                                            class="close"
+                                            data-dismiss="alert"
+                                            aria-label="Close"
+                                    >
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endif %}
+                            <div class="col-lg-12">
+                                <div class="meeting-single-item mb-3">
+                                    {#                                    <div class="thumb">#}
+                                    {##}
+                                    {#                                        <img src="{% static 'assets/images/single-meeting.jpg' %}"#}
+                                    {#                                                alt=""/>#}
+                                    {#                                    </div>#}
+
+                                    <div class="down-content-create_order">
+                                        <div class="row">
+{#                                            <object><embed src="/documents/agreements/Agreement№3.pdf" width="700" height="500" /></object>#}
+{#                                            <embed src="{{ agreement.document }}" width="700" height="800" />#}
+                                            <iframe src="{% static agreement.document %}" width="700" height="800"></iframe>
+{#                                            {{ document.document }}#}
+{#                                            <div class="col-lg-12">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">Заказчик:</label>#}
+{#                                                    <input name="cust_name" id="cust_name" required="" type="text" class="form-control"#}
+{#                                                   value="{{ customer.comp_name }}" readonly="readonly">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-12">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">Юр. адрес</label>#}
+{#                                                    <input name="cust_address" id="cust_address" required="" type="text" class="form-control"#}
+{#                                                   value="{{ customer.address }}" readonly="readonly">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-6">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">ИНН</label>#}
+{#                                                    <input name="cust_inn" id="cust_inn" required="" type="text" class="form-control"#}
+{#                                                    value="{{ customer.inn }}" readonly="readonly">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-6">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">КПП</label>#}
+{#                                                    <input name="cust_kpp" id="cust_kpp" required="" type="text" class="form-control"#}
+{#                                                    value="{{ customer.kpp }}" readonly="readonly">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-6">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">В лице:</label>#}
+{#                                                    <input name="cust_fio" id="cust_fio" required="" type="text" class="form-control"#}
+{#                                                    placeholder="Иванова Ивана Ивановича">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-6">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">На основании:</label>#}
+{#                                                    <input name="cust_dov" id="cust_dov" required="" type="text" class="form-control"#}
+{#                                                    placeholder="Устава/Доверенности №... от...">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{##}
+{#                                            <div class="col-lg-12">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">Поставщик:</label>#}
+{#                                                    <input name="supp_name" id="supp_name" required="" type="text" class="form-control"#}
+{#                                                   value="{{ supplier.comp_name }}" readonly="readonly">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-12">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">Юр. адрес</label>#}
+{#                                                    <input name="supp_address" id="supp_address" required="" type="text" class="form-control"#}
+{#                                                   value="{{ supplier.address }}" readonly="readonly">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-6">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">ИНН</label>#}
+{#                                                    <input name="supp_inn" id="supp_inn" required="" type="text" class="form-control"#}
+{#                                                    value="{{ supplier.inn }}" readonly="readonly">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-6">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">КПП</label>#}
+{#                                                    <input name="supp_kpp" id="supp_kpp" required="" type="text" class="form-control"#}
+{#                                                    value="{{ supplier.kpp }}" readonly="readonly">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-6">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">В лице:</label>#}
+{#                                                    <input name="supp_fio" id="supp_fio" required="" type="text" class="form-control"#}
+{#                                                    placeholder="Петрова Петра Петровича">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-6">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">На основании:</label>#}
+{#                                                    <input name="supp_dov" id="supp_dov" required="" type="text" class="form-control"#}
+{#                                                    placeholder="Устава/Доверенности №... от...">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-12">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">Предмет соглашения:</label>#}
+{#                                                    <input name="agr_order_name" id="agr_order_name" required="" type="text" class="form-control"#}
+{#                                                   value="{{ order.name }} в количестве {{ order.quantity }} {{ order.get_units_quantity_display }}" readonly="readonly">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-12">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">Доставить по адресу:</label>#}
+{#                                                    <input name="agr_delivery_address" id="agr_delivery_address" required="" type="text" class="form-control"#}
+{#                                                   value="{{ order.delivery_address }}" readonly="readonly">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-lg-12">#}
+{#                                                <div class="mb-3">#}
+{#                                                    <label class="small mb-1" id="">Стоимость услуги:</label>#}
+{#                                                    <input name="agr_price" id="agr_price" required="" type="text" class="form-control"#}
+{#                                                   value="{{ response_orders.price }} руб." readonly="readonly">#}
+{#                                                </div>#}
+{#                                            </div>#}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="main-button-red">
+                                        <a href="{% url 'orders:view_order' order.id %}"
+                                           class="button-red btn-block"
+                                           type="button"
+                                           id="button_clear"
+                                           style="margin-bottom: 15px">
+                                            Назад
+                                        </a>
+{#                                        <button#}
+{#                                                href="{% url 'orders:view_order' order.id %}"#}
+{#                                                onclick="location.href={% url 'orders:view_order' order.id %}"#}
+{#                                                id="button_clear"#}
+{#                                                class="button-red btn-block"#}
+{#                                                type="button"#}
+{#                                                style="margin-bottom: 15px"#}
+{#                                        >#}
+{#                                            Назад#}
+{#                                        </button>#}
+                                        <button
+                                                class="button-green"
+                                                role="button"
+                                                aria-pressed="true"
+                                        >
+                                            Подписать соглашение
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+        {% include 'includes/inc_footer.html' %}
+
+    </section>
+{% endblock %}

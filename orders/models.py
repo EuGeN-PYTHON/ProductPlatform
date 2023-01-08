@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 from users.models import Profile
 
@@ -51,7 +52,7 @@ class Order(models.Model):
     delivery_address = models.TextField(verbose_name='Адрес доставки')
     status = models.CharField(choices=status_choice,
                               max_length=120, default='Active', verbose_name='Статус')
-    create_at = models.DateTimeField(auto_now_add=True)
+    create_at = models.DateTimeField(default=timezone.now)
     end_time = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -91,7 +92,7 @@ class ResponseOrder(models.Model):
     response_user = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='Компания')
     price = models.FloatField(default=0, verbose_name='Цена')
     offer = models.TextField(verbose_name='Предложение')
-    create_at = models.DateTimeField(auto_now_add=True)
+    create_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
         verbose_name = 'Отклик'
@@ -121,7 +122,7 @@ class StatusResponse(models.Model):
     response_order = models.ForeignKey(ResponseOrder, on_delete=models.CASCADE, verbose_name='Отклик на заказ')
     status = models.CharField(choices=status_choice,
                               max_length=120, verbose_name='Статус', default='On Approval')
-    time_status = models.DateTimeField(auto_now_add=True)
+    time_status = models.DateTimeField(default=timezone.now)
     user_initiator = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='Пользователь инициатор')
 
     class Meta:
@@ -161,13 +162,14 @@ class Agreement(models.Model):
     customer_attorney = models.CharField(verbose_name='Документ Заказчика', max_length=200, blank=True)
     supplier_signer = models.CharField(verbose_name='ФИО подписанта Поставщика', max_length=200, blank=True)
     supplier_attorney = models.CharField(verbose_name='Документ Поставщика', max_length=200, blank=True)
-    create_date = models.DateTimeField(auto_now_add=True)
+    create_date = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
         super(Agreement, self).save(*args, **kwargs)
-        StatusAgreement.objects.create(agreement=self,
-                                      status='Created',
-                                      user_initiator=self.order.author)
+        if len(StatusAgreement.objects.filter(agreement=self, status='Created')) == 0:
+            StatusAgreement.objects.create(agreement=self,
+                                        status='Created',
+                                        user_initiator=self.order.author)
 
 
 class StatusAgreement(models.Model):

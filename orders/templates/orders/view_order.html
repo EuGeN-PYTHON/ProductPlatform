@@ -155,11 +155,25 @@
                                         </div>
 
 
-                                        {% if approved_response and approved_response == response_order %}
-                                            <span class="accepted-response">Принят</span>
-                                            {% if no_sign_agreement %}
+                                        {% if response_order.last_status == "Pre-approved"  %}
+                                            {% if response_order.agreement_status == None %}
+                                                <span class="accepted-response">Создать</span>
                                                 <a href="{% url 'orders:view_agreement' order.id response_order.id %}"><i class="fa fa-pencil-square-o"></i></a>
+                                            {% elif response_order.agreement_status == 'Created' %}
+                                                <span class="accepted-response">Подписать</span>
+                                              <a href="{% url 'orders:view_doc_agreement' response_order.id_agreement %}"><i class="fa fa-pencil-square-o"></i></a>
+                                            {% elif response_order.agreement_status == 'Customer-Signed' %}
+                                                <span class="accepted-response">Ожидание подписи</span>
+{#                                              <a href="{% url  %}"><i class="fa fa-pencil-square-o"></i></a>#}
+                                            {% elif response_order.agreement_status == 'Signed' %}
+                                                <span class="accepted-response">Подписан</span>
+{#                                              <a href="{% url  %}"><i class="fa fa-pencil-square-o"></i></a>#}
+                                            {% elif response_order.agreement_status == 'Cancelled' %}
+                                                <span class="accepted-response">Отменен</span>
+{#                                              <a href="{% url  %}"><i class="fa fa-pencil-square-o"></i></a>#}
                                             {% endif %}
+                                        {% elif response_order.last_status == "Approved" %}
+                                            <span class="accepted-response">Принят</span>
                                         {% elif response_order.last_status == "Not Approved" %}
                                             <span class="not-accepted-response">Отклонен</span>
                                             {#                                        {% elif approved_response and approved_response != response_order %}#}
@@ -211,7 +225,7 @@
                                         <a href="{% url 'users:profile' order.author_id %}">
                                             <div class="read_only order-info">
                                                 {{ order.author.comp_name }} на сайте
-                                                с {{ order.author.date_joined|date:'d.m.y' }}
+                                                с {{ order.author.date_joined | date:"D d M Y" }}
                                             </div>
                                         </a>
                                     </div>
@@ -381,8 +395,7 @@
                                                        readonly="readonly" type="text"
                                                        id="company"
                                                        required=""
-                                                       value="{{ order.author.comp_name }} на сайте с {{ order.author.date_joined }}">
-
+                                                       value="{{ order.author.comp_name }} на сайте с {{ order.author.date_joined | date:"d M Y" }}">
                                             </a>
                                         </fieldset>
                                     </div>

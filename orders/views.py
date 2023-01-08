@@ -1,23 +1,21 @@
 import datetime
-from pprint import pprint
 
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.paginator import Paginator
 from django.db.models import Count, Q
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse, FileResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from orders.forms import CreateOrderForm, FeedbackForm, ResponseOrderForm, CreateAgreementForm
 from multi_form_view import MultiModelFormView
-from orders.models import CategoryOrder, Order, StatusResponse, ResponseOrder, Agreement
-from users.models import Profile
-from orders.filters import OrderFilter, CategoryFilter
-from django.views import View
-from django.contrib.auth.decorators import login_required, user_passes_test
-from utils.document_agreement import get_path_document
 
 from orders.decorators import order_board_check
+from orders.filters import OrderFilter, CategoryFilter
+from orders.forms import CreateOrderForm, FeedbackForm, ResponseOrderForm, CreateAgreementForm
+from orders.models import CategoryOrder, Order, StatusResponse, ResponseOrder, Agreement, StatusAgreement
+from users.models import Profile
+from utils.document_agreement import get_path_document
 
 
 class MainView(CreateView):
@@ -161,15 +159,15 @@ class CreateAgreement(LoginRequiredMixin, UserPassesTestMixin, CreateView):
             chek_agreement = Agreement.objects.filter(response_order=response_order)
             if len(chek_agreement) == 0:
                 agreement = Agreement.objects.create(order=order,
-                                             response_order=response_order,
-                                             customer_signer=form.data.get(
-                                                 'cust_fio'),
-                                             customer_attorney=form.data.get(
-                                                 'cust_dov'),
-                                             supplier_signer=form.data.get(
-                                                 'supp_fio'),
-                                             supplier_attorney=form.data.get(
-                                                 'supp_dov'))
+                                                     response_order=response_order,
+                                                     customer_signer=form.data.get(
+                                                         'cust_fio'),
+                                                     customer_attorney=form.data.get(
+                                                         'cust_dov'),
+                                                     supplier_signer=form.data.get(
+                                                         'supp_fio'),
+                                                     supplier_attorney=form.data.get(
+                                                         'supp_dov'))
                 path = get_path_document(request, order, response_order, form, agreement)
                 agreement.document = path
                 agreement.save()
@@ -181,6 +179,7 @@ class CreateAgreement(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def test_func(self):
         return self.request.user.role != 'Supplier'
+
 
 class CreateOrder(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """Класс-обработчик для создания Заказа"""
@@ -236,6 +235,56 @@ class CreateOrder(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def test_func(self):
         return self.request.user.role != 'Supplier'
+
+
+class AgreementDocView(LoginRequiredMixin, MultiModelFormView):
+    """Класс-обработчик для просмотра договоров в WORD(PDF)"""
+    model = Agreement
+    template_name = 'orders/sign_agreement.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            id = kwargs.get('pk', None)
+        except KeyError as err:
+            print(err)
+        try:
+            agreement = get_object_or_404(Agreement, id=id)
+        except Http404 as err:
+            print(err)
+
+        # file_path = f'documents/agreements/Agreement№{id}.docx'
+        # with open(file_path, 'rb') as doc:
+        #     response = HttpResponse(doc.read(), content_type='application/ms-word')
+        #     # response = HttpResponse(template_output)
+        #     response['Content-Disposition'] = 'inline;filename=name.docx'
+        #     context = {
+        #         'document': response,
+        #     }
+        # return render(request, self.template_name, context=context)
+
+        # doc = DocxTemplate(f'documents/agreements/Agreement№{id}.docx')
+        # # you have to place your_docx_template.docx in the root of your project (same level as manage.py).
+        #
+        # context = {
+        #     # ...
+        # }
+        #
+        # response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        # response["Content-Disposition"] = f'filename="Agreement№{id}.docx"'
+        #
+        # doc.render(context)
+        # doc.save(response)
+        order = Order.objects.get(id=agreement.order.id)
+        # convert(f'documents/agreements/Agreement№{id}.docx', f"documents/agreements/Agreement№{id}.pdf")
+        # pdf = open(f"documents/agreements/Agreement№{id}.pdf", 'rb')
+        # response = FileResponse(pdf)
+        # response["Content-Disposition"] = f'filename="Agreement№{id}.pdf"'
+
+        context = {
+            'agreement': agreement,
+            'order': order
+        }
+        return render(request, self.template_name, context=context)
 
 
 class AgreementView(LoginRequiredMixin, MultiModelFormView):
@@ -301,14 +350,11 @@ class OrderView(LoginRequiredMixin, MultiModelFormView):
             cancelled_response = True
         else:
             no_approved_response = True
-        try:
-            agreement = Agreement.objects.get(response_order__order=order)
-            if agreement:
-                no_sign_agreement = False
-            else:
-                no_sign_agreement = True
-        except:
-            no_sign_agreement = True
+        # try:
+        #     agreement = Agreement.objects.get(response_order__order=order)
+        #     no_agreement = False
+        # except:
+        #     no_agreement = True
         user = request.user
         # response_orders = order.responseorder_set.all()
         # print(response_orders)
@@ -321,6 +367,18 @@ class OrderView(LoginRequiredMixin, MultiModelFormView):
                 response_statuses = StatusResponse.objects.filter(
                     response_order=response_order).last()
                 response_order.last_status = response_statuses.status
+                try:
+                    agreement = Agreement.objects.get(response_order=response_order)
+                    no_agreement = False
+                except:
+                    no_agreement = True
+                if not no_agreement:
+                    status_agreement = StatusAgreement.objects.filter(
+                        agreement__response_order=response_order).last()
+                    response_order.agreement_status = status_agreement.status
+                    response_order.id_agreement = agreement.id
+                elif no_agreement:
+                    response_order.agreement_status = None
                 if response_statuses is not None:
                     # if response_statuses.status != 'Cancelled':
                     #     responses.append(response_order)
@@ -333,6 +391,18 @@ class OrderView(LoginRequiredMixin, MultiModelFormView):
                 response_statuses = StatusResponse.objects.filter(
                     response_order=response_order).last()
                 response_order.last_status = response_statuses.status
+                try:
+                    agreement = Agreement.objects.get(response_order=response_order)
+                    no_agreement = False
+                except:
+                    no_agreement = True
+                if not no_agreement:
+                    status_agreement = StatusAgreement.objects.filter(
+                        agreement__response_order=response_order).last()
+                    response_order.agreement_status = status_agreement.status
+                    response_order.id_agreement = agreement.id
+                elif no_agreement:
+                    response_order.agreement_status = None
                 if response_statuses.status == 'Cancelled' \
                         or response_statuses.status == 'Approved' \
                         or response_statuses.status == 'Not Approved':
@@ -386,7 +456,8 @@ class OrderView(LoginRequiredMixin, MultiModelFormView):
             'response_id': response_id,
             'response_order_user_id': self.request.user.id,
             'not_active_responses_order_users_id': not_active_responses_order_users_id,
-            'no_sign_agreement': no_sign_agreement
+
+            # 'no_agreement': no_agreement
 
         }
         return render(request, self.template_name, context=context)
@@ -420,7 +491,7 @@ class OrderView(LoginRequiredMixin, MultiModelFormView):
             return {'response_order': response}
 
     def order_confirmation(self, response_pk, order_pk):
-        """Утверждение отклика и изменение статуса заказа на Not Active"""
+        """Пре-Утверждение отклика и изменение статуса заказа на Not Active"""
         if self.POST:
             try:
                 # status_response = StatusResponse.objects.filter(
@@ -429,7 +500,7 @@ class OrderView(LoginRequiredMixin, MultiModelFormView):
                 # status_response.status = 'Approved'
                 # status_response.save()
                 StatusResponse.objects.create(response_order_id=response_pk,
-                                              status='Approved',
+                                              status='Pre-approved',
                                               user_initiator=self.user)
                 # all_responses_for_order = ResponseOrder.objects.filter(order_id=order_pk)
                 # for response_order in all_responses_for_order:

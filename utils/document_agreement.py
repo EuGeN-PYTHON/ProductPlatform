@@ -1,25 +1,31 @@
+import ProductPlatform.settings
 import os
 
 import docx
 import datetime
 from dateutil.relativedelta import relativedelta
 from docx.enum.section import WD_SECTION_START, WD_ORIENTATION
+from docx2pdf import convert
+
 
 def get_path_document(request, order, response_order, form, agreement):
     path = make_document(request, order, response_order, form, agreement)
     # path = path[path.index('documents'):]
     return path
 
+
 def load_document(document, id):
     # in_path = os.getcwd().split('/')
     # in_path.pop()
     # in_path = '/'.join(in_path)
-    path_in = f'documents/agreements/Agreement№{id}.docx'
+    path_in = f'documents/agreements/{id}/Agreement№{id}.docx'
     document.save(path_in)
-    return path_in
+    convert(f'documents/agreements/{id}/Agreement№{id}.docx', f"static/agreements/{id}/Agreement№{id}.pdf")
+    path_pdf = f"/agreements/Agreement№{id}.pdf"
+    return path_pdf
+
 
 def make_document(request, order, response_order, form, agreement):
-
     document = docx.Document()
     # доступ к первой секции:
     section = document.sections[0]
@@ -59,7 +65,8 @@ def make_document(request, order, response_order, form, agreement):
     # docx_title=f"Agreement№{id}.docx"
     # ---- Cover Letter ----
     # document.add_picture((r'%s/static/images/my-header.png' % (settings.PROJECT_PATH)), width=Inches(4))
-    heading = document.add_heading(f'СОГЛАШЕНИЕ № {id}/{datetime.date.today().strftime("%Y")}\nПОСТАВКИ ПРОДУКТОВ ПИТАНИЯ', 1)
+    heading = document.add_heading(
+        f'СОГЛАШЕНИЕ № {id}/{datetime.date.today().strftime("%Y")}\nПОСТАВКИ ПРОДУКТОВ ПИТАНИЯ', 1)
     heading.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
     date_paragraph = document.add_paragraph(datetime.date.today().strftime("%d.%m.%Y"))
     date_paragraph.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.RIGHT
@@ -288,7 +295,8 @@ def make_document(request, order, response_order, form, agreement):
                            f' расторжения Договора.\n'
                            f'11.4. Договор может быть пролонгирован при отсутствии претензий к'
                            f' Поставщику на условиях настоящего Договора сроком на 1 год.')
-    heading_12 = document.add_heading('12. ОТКАЗ ОТ ИСПОЛНЕНИЯ ДОГОВОРА,\nРАСТОРЖЕНИЕ ДОГОВОРА В ОДНОСТОРОННЕМ ПОРЯДКЕ',3)
+    heading_12 = document.add_heading('12. ОТКАЗ ОТ ИСПОЛНЕНИЯ ДОГОВОРА,\nРАСТОРЖЕНИЕ ДОГОВОРА В ОДНОСТОРОННЕМ ПОРЯДКЕ',
+                                      3)
     heading_12.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
     document.add_paragraph(f'12.1. Отказ от исполнения Договора и его прекращение происходит в порядке'
                            f' и на условиях, установленных законодательством Российской Федерации с'
@@ -322,11 +330,11 @@ def make_document(request, order, response_order, form, agreement):
     document.add_paragraph()
     document.add_paragraph('Приложение:\n'
                            '1.	Приложение № 1 к Договору - образец «Заявка на поставку продуктов питания».')
-                           # '\n'
-                           # '2.	Приложение № 2 к типовому договору поставки - форма'
-                           # ' «Универсальный передаточный документ».\n'
-                           # '3.	Приложение № 3 к типовому договору поставки - форма'
-                           # ' «Универсальный корректировочный документ».')
+    # '\n'
+    # '2.	Приложение № 2 к типовому договору поставки - форма'
+    # ' «Универсальный передаточный документ».\n'
+    # '3.	Приложение № 3 к типовому договору поставки - форма'
+    # ' «Универсальный корректировочный документ».')
     heading_13 = document.add_heading('13. АДРЕСА, БАНКОВСКИЕ РЕКВИЗИТЫ И ПОДПИСИ СТОРОН', 3)
     heading_13.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
     heading_14 = document.add_heading('ПОДПИСИ СТОРОН:\n', 4)
@@ -400,3 +408,17 @@ def make_document(request, order, response_order, form, agreement):
     hdr_cells[1].text = 'Поставщик:\nОт имени поставщика:\n\n\n____________________________\nМ.П.'
 
     return load_document(document, id)
+
+# import datetime
+# from django.utils import timezone
+# import ProductPlatform
+
+# in_path = os.getcwd().split('/')
+# in_path.pop()
+# in_path = '/'.join(in_path)
+# DJANGO_SETTINGS_MODULE = ProductPlatform.settings.Path.absolute
+# now = datetime.datetime.now()
+#
+# now_dj = timezone.now()
+#
+# print(now,now_dj)
